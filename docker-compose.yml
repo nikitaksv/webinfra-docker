@@ -1,0 +1,100 @@
+version: '3.4'
+### NETWORKS #######################
+networks: 
+  default: 
+    driver: bridge
+    ipam:
+      driver: default
+      config: 
+        - subnet: ${SUBNET}
+### VOLUMES ########################
+volumes:
+  mysql_data:
+  ldap_data:
+  ldap_data_config:
+  ldap_data_backup:
+### SERVICES ########################
+services:
+### LDAP ###########################
+  ldap:
+    container_name: ${COMPOSE_PROJECT_NAME}_${LDAP_CONTAINER_NAME}
+    build:
+      context: ./ldap
+      args: 
+        - LDAP_TAG_VERSION=${LDAP_TAG_VERSION}
+    volumes: 
+      - ldap_data:/var/lib/ldap
+      - ldap_data_config:/etc/ldap/slapd.d
+      - ldap_data_backup:/data/backup
+    environment: 
+      - LDAP_DOMAIN=${LDAP_DOMAIN}
+      - LDAP_ORGANISATION=${LDAP_ORGANISATION}
+      - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}
+      - LDAP_BACKUP_CONFIG_CRON_EXP=${LDAP_BACKUP_CONFIG_CRON_EXP}
+      - LDAP_BACKUP_DATA_CRON_EXP=${LDAP_BACKUP_DATA_CRON_EXP}
+      - LDAP_BACKUP_TTL=${LDAP_BACKUP_TTL}
+    networks: 
+      default:
+        ipv4_address: ${LDAP_HOST}
+    restart: always
+
+### LDAP-CLIENT ####################
+  ldap-client:
+    container_name: ${COMPOSE_PROJECT_NAME}_${LDAP_CLIENT_CONTAINER_NAME}
+    hostname: phpldapadmin.nindeco.com
+    build:
+      context: ./ldap-client
+      args: 
+        - LDAP_CLIENT_TAG_VERSION=${LDAP_CLIENT_TAG_VERSION}
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=${LDAP_HOST}
+    depends_on:
+      - ldap
+    ports:
+      - ${LDAP_CLIENT_PORT}:${LDAP_CLIENT_EXPOSE}
+    restart: always
+    networks: 
+      default:
+        ipv4_address: ${LDAP_CLIENT_HOST}
+    
+### REDMINE ########################
+  redmine:
+    container_name: ${COMPOSE_PROJECT_NAME}_${REDMINE_CONTAINER_NAME}
+    build:
+      context: ./redmine
+      args: 
+        - REDMINE_TAG_VERSION=${REDMINE_TAG_VERSION}
+    environment: 
+      - REDMINE_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - REDMINE_DB_DATABASE=${MYSQL_DATABASE}
+      - REDMINE_DB_MYSQL=${MYSQL_HOST}
+    depends_on: 
+      - mysql
+    networks: 
+      default:
+    ports:
+      - ${REDMINE_PORT}:${REDMINE_EXPOSE}
+    restart: always
+
+### MYSQL ##########################
+  mysql:
+    container_name: ${COMPOSE_PROJECT_NAME}_${MYSQL_CONTAINER_NAME}
+    build:
+      context: ./mysql
+      args: 
+        - MYSQL_TAG_VERSION=${MYSQL_TAG_VERSION}
+    environment: 
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${TZ}
+    volumes: 
+      # - mysql_data:/var/lib/mysql
+      - ${MYSQL_DUMP_PATH}/${MYSQL_DUMP_NAME}:/docker-entrypoint-initdb.d/${MYSQL_DUMP_NAME}
+    networks: 
+      default:
+        ipv4_address: ${MYSQL_HOST}
+    restart: always
+      
+
+
