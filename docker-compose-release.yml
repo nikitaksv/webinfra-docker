@@ -45,29 +45,10 @@ services:
       - LDAP_BACKUP_TTL=${LDAP_BACKUP_TTL}
     networks: 
       default:
+        ipv4_address: ${LDAP_HOST}
         aliases: 
           - ${LDAP_HOSTNAME}.${DOMAIN}
     restart: always
-
-### LDAP-CLIENT ####################
-  ldap-client:
-    container_name: ${COMPOSE_PROJECT_NAME}_${LDAP_CLIENT_CONTAINER_NAME}
-    build:
-      context: ./ldap-client
-      args: 
-        - LDAP_CLIENT_TAG_VERSION=${LDAP_CLIENT_TAG_VERSION}
-    environment:
-      - PHPLDAPADMIN_LDAP_HOSTS=${LDAP_HOSTNAME}.${DOMAIN}
-    depends_on:
-      - ldap
-    expose:
-      - ${LDAP_CLIENT_EXPOSE}
-    restart: always
-    networks: 
-      default:
-        ipv4_address: ${LDAP_CLIENT_HOST}
-        aliases: 
-          - ${LDAP_CLIENT_HOSTNAME}.${DOMAIN}
     
 ### BIND ###########################
   bind:
