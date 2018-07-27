@@ -35,6 +35,7 @@ services:
       - ldap_data:/var/lib/ldap
       - ldap_config:/etc/ldap/slapd.d
       - ldap_data_backup:/data/backup
+      # - ${LDAP_SETUP_CONFIG_PATH}/bootstrap/ldif/custom:/container/service/slapd/assets/config/bootstrap/ldif/custom
     environment: 
       - LDAP_DOMAIN=${DOMAIN}
       - LDAP_ORGANISATION=${LDAP_ORGANISATION}
@@ -152,20 +153,89 @@ services:
           - ${GITLAB_HOSTNAME}.${DOMAIN}
     restart: always
 
-### ROUNDCUBE ######################
+### ROUNDCUBEMAIL ##################
   roundcube:
-    container_name: ${COMPOSE_PROJECT_NAME}_${ROUNDCUBE_CONTAINER_NAME}
+    container_name: ${COMPOSE_PROJECT_NAME}_${ROUNDCUBEMAIL_CONTAINER_NAME}
     build:
       context: ./roundcube
       args: 
-        - ROUNDCUBE_TAG_VERSION=${ROUNDCUBE_TAG_VERSION}
+        - ROUNDCUBEMAIL_TAG_VERSION=${ROUNDCUBEMAIL_TAG_VERSION}
     environment: 
-      - ROUNDCUBE_DEFAULT_HOST=mail.${DOMAIN}
+      - ROUNDCUBEMAIL_DEFAULT_HOST=${MAIL_HOST}
+      - ROUNDCUBEMAIL_DEFAULT_PORT=143
+      - ROUNDCUBEMAIL_SMTP_SERVER=tls://smtp.${DOMAIN}
+      - ROUNDCUBEMAIL_SMTP_PORT=587
+      - ROUNDCUBEMAIL_DB_TYPE=mysql
+      - ROUNDCUBEMAIL_DB_HOST=${MYSQL_HOST}
+      - ROUNDCUBEMAIL_DB_USER=${MYSQL_USER}
+      - ROUNDCUBEMAIL_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - ROUNDCUBEMAIL_DB_NAME=${ROUNDCUBEMAIL_DB_NAME}
     networks: 
       default:
-        ipv4_address: ${ROUNDCUBEL_HOST}
+        ipv4_address: ${ROUNDCUBEMAIL_HOST}
         aliases: 
-          - ${ROUNDCUBE_HOSTNAME}.${DOMAIN}
+          - ${ROUNDCUBEMAIL_HOSTNAME}.${DOMAIN}
     restart: always
 
+### MAIL ###########################
+  mail:
+    hostname: ${MAIL_HOSTNAME}
+    domainname: ${DOMAIN}
+    container_name: ${COMPOSE_PROJECT_NAME}_${MAIL_CONTAINER_NAME}
+    build:
+      context: ./mail-server
+      args: 
+        - MAIL_TAG_VERSION=${MAIL_TAG_VERSION}
+    ports:
+      - "25:25"
+      - "143:143"
+      - "587:587"
+      - "465:465"
+      - "993:993"
+
+    volumes:
+      - maildata:/var/mail
+      - mailstate:/var/mail-state
+      - ./mail/config/:/tmp/docker-mailserver/
+
+    environment:
+      - ENABLE_SPAMASSASSIN=1
+      - ENABLE_CLAMAV=0
+      - ENABLE_FAIL2BAN=1
+      - ENABLE_POSTGREY=1
+      - ENABLE_SASLAUTHD=1
+      - ENABLE_LDAP=1
+      - ONE_DIR=1
+      - DMS_DEBUG=1      
+      - LDAP_SERVER_HOST=${LDAP_HOSTNAME}.${DOMAIN}
+      - LDAP_SEARCH_BASE=ou=people,dc=nindeco,dc=com
+      - LDAP_BIND_DN=cn=admin,dc=nindeco,dc=com
+      - LDAP_BIND_PW=defender
+      - LDAP_QUERY_FILTER_USER=(mail=%s)
+      - LDAP_QUERY_FILTER_GROUP=(memberUid=%s)
+      - LDAP_QUERY_FILTER_ALIAS=(mailalias=%s)
+      - LDAP_QUERY_FILTER_DOMAIN=(|(mail=*@%s)(mailalias=*@%s))
+      - DOVECOT_PASS_FILTER=(&(uid=%n)(objectClass=person))
+      - DOVECOT_PASS_ATTRS=userPassword=password
+      - DOVECOT_USER_FILTER=(&(uid=%n)(objectClass=person))
+      - DOVECOT_USER_ATTRS=uidNumber=uid,gidNumber=gid,mailHomeDirectory=home
+      - SASLAUTHD_MECHANISMS=ldap
+      - SASLAUTHD_LDAP_SERVER=${LDAP_HOSTNAME}.${DOMAIN}
+      - SASLAUTHD_LDAP_SEARCH_BASE=dc=nindeco,dc=com
+      - SASLAUTHD_LDAP_BIND_DN=cn=admin,dc=nindeco,dc=com
+      - SASLAUTHD_LDAP_PASSWORD=defender
+      - SASLAUTHD_LDAP_FILTER=(&(uid=%n)(objectClass=person))
+      - POSTMASTER_ADDRESS=postmaster@${DOMAIN}
+
+      - SSL_TYPE=letsencrypt
+      - PERMIT_DOCKER=network
+    networks: 
+      default:
+        ipv4_address: ${MAIL_HOST}
+        aliases: 
+          - smtp.${DOMAIN}
+          - imap.${DOMAIN}
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE
   

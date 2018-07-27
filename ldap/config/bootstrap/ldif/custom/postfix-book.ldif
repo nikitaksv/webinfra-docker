@@ -1,14 +1,14 @@
 # AUTO-GENERATED FILE - DO NOT EDIT!! Use ldapmodify.
-# CRC32 688dfbeb
+# CRC32 40845ef1
 dn: cn=postfix-book,cn=schema,cn=config
 objectClass: olcSchemaConfig
 cn: postfix-book
 olcAttributeTypes: {0}( 1.3.6.1.4.1.29426.1.10.1 NAME 'mailHomeDirectory' DE
  SC 'The absolute path to the mail user home directory' EQUALITY caseExactIA
  5Match SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 SINGLE-VALUE )
-olcAttributeTypes: {1}( 1.3.6.1.4.1.29426.1.10.2 NAME 'postfixMailAlias' DESC 'RFC8
- 22 Mailbox - mail alias' EQUALITY caseIgnoreIA5Match SUBSTR caseIgnoreIA5Su
- bstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
+olcAttributeTypes: {1}( 1.3.6.1.4.1.29426.1.10.2 NAME 'postfixMailAlias' DES
+ C 'RFC822 Mailbox - mail alias' EQUALITY caseIgnoreIA5Match SUBSTR caseIgno
+ reIA5SubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} )
 olcAttributeTypes: {2}( 1.3.6.1.4.1.29426.1.10.3 NAME 'mailUidNumber' DESC '
  UID required to access the mailbox' EQUALITY integerMatch SYNTAX 1.3.6.1.4.
  1.1466.115.121.1.27 SINGLE-VALUE )
@@ -30,14 +30,14 @@ olcAttributeTypes: {7}( 1.3.6.1.4.1.29426.1.10.8 NAME 'mailStorageDirectory'
 olcAttributeTypes: {8}( 1.3.6.1.4.1.29426.1.10.9 NAME 'mailSieveRuleSource'
  DESC 'Sun ONE Messaging Server defined attribute' SYNTAX 1.3.6.1.4.1.1466.1
  15.121.1.26 X-ORIGIN 'Sun ONE Messaging Server' )
-olcAttributeTypes: {9}( 1.3.6.1.4.1.29426.1.10.10 NAME '
+olcAttributeTypes: {9}( 1.3.6.1.4.1.29426.1.10.10 NAME 'mailForwardingAddres
  s' DESC 'Address(es) to forward all incoming messages to.' EQUALITY caseIgn
  oreIA5Match SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{320} )
 olcObjectClasses: {0}( 1.3.6.1.4.1.29426.1.2.2.1 NAME 'PostfixBookMailAccoun
  t' DESC 'Mail account used in Postfix Book' SUP top AUXILIARY MUST mail MAY
-  ( mailHomeDirectory $ postfixMailAlias $ mailGroupMember $ mailUidNumber $ mailGi
- dNumber $ mailEnabled $ mailQuota $ mailStorageDirectory $ mailSieveRuleSou
- rce ) )
+  ( mailHomeDirectory $ postfixMailAlias $ mailGroupMember $ mailUidNumber $
+  mailGidNumber $ mailEnabled $ mailQuota $ mailStorageDirectory $ mailSieve
+ RuleSource ) )
 olcObjectClasses: {1}( 1.3.6.1.4.1.29426.1.2.2.2 NAME 'PostfixBookMailForwar
  d' DESC 'Mail forward used in Postfix Book' SUP top AUXILIARY MUST ( mail $
   postfixMailAlias ) MAY mailForwardingAddress )
