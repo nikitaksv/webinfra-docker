@@ -183,7 +183,7 @@ services:
     domainname: ${DOMAIN}
     container_name: ${COMPOSE_PROJECT_NAME}_${MAIL_CONTAINER_NAME}
     build:
-      context: ./mail-server
+      context: ./mail
       args: 
         - MAIL_TAG_VERSION=${MAIL_TAG_VERSION}
     ports:
