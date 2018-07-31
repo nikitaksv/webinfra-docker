@@ -34,7 +34,7 @@ ou: groups
 # Entry 4: cn=all,ou=groups,dc=nindeco,dc=com
 dn: cn=all,ou=groups,dc=nindeco,dc=com
 cn: all
-gidnumber: 1001
+gidnumber: 5000
 mail: all@nindeco.com
 memberuid: krasnikov
 objectclass: posixGroup
@@ -50,7 +50,7 @@ ou: people
 # Entry 6: uid=krasnikov,ou=people,dc=nindeco,dc=com
 dn: uid=krasnikov,ou=people,dc=nindeco,dc=com
 cn: Nikita Krasnikov
-gidnumber: 500
+gidnumber: 5000
 givenname: Nikita
 homedirectory: /home/users/krasnikov
 mail: krasnikov@nindeco.com

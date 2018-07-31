@@ -61,14 +61,12 @@
 			<spacer>1</spacer>
 			<verify>1</verify>
 		</attribute>
-		<attribute id="uidNumber">
-			<display>UID Number</display>
-			<icon>terminal.png</icon>
-			<order>13</order>
+		<attribute id="mailEnabled">
+			<display>Email Enabled</display>
+			<order>6</order>
 			<page>1</page>
-			<readonly>1</readonly>
-			<value>=php.GetNextNumber(/;uidNumber)</value>
 		</attribute>
+		
 		<attribute id="gidNumber">
 			<display>GID Number</display>
 			<!-- <onchange>=autoFill(homeDirectory;/home/users/%gidNumber|0-0/T%/%uid|3-%)</onchange> -->
@@ -98,33 +96,24 @@
 			<order>10</order>
 			<page>1</page>
 		</attribute>
-		<attribute id="mailHomeDirectory">
-			<display>Email Home Directory</display>
-			<icon>folder.png</icon>
+		<attribute id="uidNumber">
+			<display>UID Number</display>
+			<icon>terminal.png</icon>
 			<order>11</order>
 			<page>1</page>
-		</attribute>
-		<attribute id="mailStorageDirectory">
-			<display>Email Storage Directory</display>
-			<icon>folder.png</icon>
-			<order>12</order>
-			<page>1</page>
-		</attribute>
-		<attribute id="mailEnabled">
-			<display>Email Enabled</display>
-			<order>6</order>
-			<page>1</page>
+			<readonly>1</readonly>
+			<value>=php.GetNextNumber(/;uidNumber)</value>
 		</attribute>
 		<attribute id="mailGidNumber">
-			<display>Email Gid Number</display>
-			<order>14</order>
+			<display>Email Gid Number (TEST)</display>
+			<order>12</order>
 			<page>1</page>
 			<value>5000</value>
 		</attribute>
 		<attribute id="mailUidNumber">
 			<display>Email Gid Number</display>
 			<icon>terminal.png</icon>
-			<order>15</order>
+			<order>13</order>
 			<page>1</page>
 			<readonly>1</readonly>
 			<value>=php.GetNextNumber(/;mailUidNumber)</value>

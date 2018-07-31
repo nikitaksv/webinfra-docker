@@ -1,4 +1,1 @@
-*
-!.gitignore
-!dovecot.cf
-!postfix-accounts.cf
+opendkim

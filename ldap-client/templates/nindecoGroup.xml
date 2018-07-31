@@ -26,9 +26,8 @@
 			<page>1</page>
 		</attribute>
 		<attribute id="gidNumber">
-			<display>GUI Number</display>
+			<display>GUI Number (Fot dovecot use 5000)</display>
 			<order>3</order>
-			<readonly>1</readonly>
 			<page>1</page>
 			<value>=php.GetNextNumber(/;uidNumber)</value>
 		</attribute>

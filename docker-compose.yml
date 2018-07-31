@@ -160,8 +160,10 @@ services:
       context: ./roundcube
       args: 
         - ROUNDCUBEMAIL_TAG_VERSION=${ROUNDCUBEMAIL_TAG_VERSION}
+    volumes: 
+      - ./roundcube/config/:/var/roundcube/config/
     environment: 
-      - ROUNDCUBEMAIL_DEFAULT_HOST=${MAIL_HOST}
+      - ROUNDCUBEMAIL_DEFAULT_HOST=imap.${DOMAIN}
       - ROUNDCUBEMAIL_DEFAULT_PORT=143
       - ROUNDCUBEMAIL_SMTP_SERVER=tls://smtp.${DOMAIN}
       - ROUNDCUBEMAIL_SMTP_PORT=587
@@ -175,6 +177,9 @@ services:
         ipv4_address: ${ROUNDCUBEMAIL_HOST}
         aliases: 
           - ${ROUNDCUBEMAIL_HOSTNAME}.${DOMAIN}
+    expose:
+      - 80
+      - 443
     restart: always
 
 ### MAIL ###########################
@@ -186,6 +191,7 @@ services:
       context: ./mail
       args: 
         - MAIL_TAG_VERSION=${MAIL_TAG_VERSION}
+        - DOMAIN=${DOMAIN}
     ports:
       - "25:25"
       - "143:143"
