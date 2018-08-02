@@ -144,7 +144,8 @@ services:
     volumes: 
       - gitlab_data:/var/opt/gitlab
       - gitlab_config:/etc/gitlab
-      - ./logs/gitlab:/var/log/gitlab
+      - ${GITLAB_LDAP_CONFIG_PATH}:/etc/gitlab/gitlab.rb
+      - ${GITLAB_LOGS_PATH}:/var/log/gitlab
     networks: 
       default:
         ipv4_address: ${GITLAB_HOST}
@@ -162,8 +163,8 @@ services:
     volumes: 
       - ./roundcube/config/:/var/roundcube/config/
     environment: 
-      - ROUNDCUBEMAIL_DEFAULT_HOST=${DOMAIN}
-      - ROUNDCUBEMAIL_SMTP_SERVER=${DOMAIN}
+      - ROUNDCUBEMAIL_DEFAULT_HOST=${MAIL_HOST}
+      - ROUNDCUBEMAIL_SMTP_SERVER=${MAIL_HOST}
       - ROUNDCUBEMAIL_SMTP_PORT=25
       - ROUNDCUBEMAIL_DB_TYPE=mysql
       - ROUNDCUBEMAIL_DB_HOST=${MYSQL_HOST}
@@ -189,7 +190,6 @@ services:
       context: ./mail
       args: 
         - MAIL_TAG_VERSION=${MAIL_TAG_VERSION}
-        - DOMAIN=${DOMAIN}
     ports:
       - "25:25"
       - "143:143"
@@ -237,8 +237,6 @@ services:
     networks: 
       default:
         ipv4_address: ${MAIL_HOST}
-        aliases: 
-          - ${DOMAIN}
     cap_add:
       - NET_ADMIN
       - SYS_PTRACE

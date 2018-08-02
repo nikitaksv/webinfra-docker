@@ -35,7 +35,7 @@
 			<display>Members</display>
 			<order>3</order>
 			<page>1</page>
-			<value><![CDATA[=php.MultiList(/;(objectClass=person);uid)]]></value>
+			<value><![CDATA[=php.MultiList(/;(objectClass=person);dn)]]></value>
 		</attribute>
 	</attributes> 
 </template>

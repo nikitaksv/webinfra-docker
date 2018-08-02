@@ -76,16 +76,16 @@
 			<order>8</order>
 			<page>1</page>
 		</attribute>
-		<attribute id="mailHomeDirectory">
-			<display>Mail Home directory</display>
-			<icon>folder.png</icon>
-			<readonly>1</readonly>
+		<attribute id="mailUidNumber">
+			<display>Mail UID Number</display>
 			<order>9</order>
+			<readonly>1</readonly>
+			<value>5000</value>
 			<page>1</page>
 		</attribute>
 		<attribute id="mailGidNumber">
 			<display>Mail GID Number</display>
-			<order>10</order>
+			<order>9</order>
 			<readonly>1</readonly>
 			<value>5000</value>
 			<page>1</page>
@@ -94,23 +94,21 @@
 			<display>Email</display>
 			<icon>mail.png</icon>
 			<onchange>=autoFill(mailalias;%mail%)</onchange>
-			<onchange>=autoFill(mailHomeDirectory;/var/mail/%mail%)</onchange>
-			<order>11</order>
+			<order>10</order>
 			<page>1</page>
 		</attribute>
 		<attribute id="mailalias">
 			<display>Email Alias</display>
 			<icon>mail.png</icon>
-			<order>12</order>
+			<order>11</order>
 			<page>1</page>
 		</attribute>
 		<attribute id="uidNumber">
 			<display>UID Number</display>
 			<icon>terminal.png</icon>
-			<order>13</order>
+			<order>12</order>
 			<page>1</page>
 			<readonly>1</readonly>
 			<value>=php.GetNextNumber(/;uidNumber)</value>
 		</attribute>
-	</attributes> 
 </template>
