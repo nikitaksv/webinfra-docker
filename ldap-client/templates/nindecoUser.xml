@@ -41,8 +41,6 @@
 			<display>User ID</display>
 			<onchange>=autoFill(homeDirectory;/home/users/%uid%)</onchange>
 			<onchange>=autoFill(mail;%uid%@nindeco.com)</onchange>
-			<onchange>=autoFill(mailHomeDirectory;/srv/vmail/%mail%)</onchange>
-			<onchange>=autoFill(mailStorageDirectory;maildir:/srv/vmail/%mail%/Maildir)</onchange>
 			<order>4</order>
 			<page>1</page>
 			<spacer>1</spacer>
@@ -65,11 +63,9 @@
 			<display>Email Enabled</display>
 			<order>6</order>
 			<page>1</page>
-		</attribute>
-		
+		</attribute>	
 		<attribute id="gidNumber">
 			<display>GID Number</display>
-			<!-- <onchange>=autoFill(homeDirectory;/home/users/%gidNumber|0-0/T%/%uid|3-%)</onchange> -->
 			<order>7</order>
 			<page>1</page>
 			<value><![CDATA[=php.PickList(/;(&(objectClass=posixGroup));gidNumber;%cn%;;;;cn)]]></value>
@@ -77,46 +73,44 @@
 		<attribute id="homeDirectory">
 			<display>Home directory</display>
 			<icon>folder.png</icon>
-			<!-- <onchange>=autoFill(homeDirectory;/home/users/%gidNumber|0-0/T%/%uid|3-%)</onchange> -->
 			<order>8</order>
+			<page>1</page>
+		</attribute>
+		<attribute id="mailHomeDirectory">
+			<display>Mail Home directory</display>
+			<icon>folder.png</icon>
+			<readonly>1</readonly>
+			<order>9</order>
+			<page>1</page>
+		</attribute>
+		<attribute id="mailGidNumber">
+			<display>Mail GID Number</display>
+			<order>10</order>
+			<readonly>1</readonly>
+			<value>5000</value>
 			<page>1</page>
 		</attribute>
 		<attribute id="mail">
 			<display>Email</display>
 			<icon>mail.png</icon>
 			<onchange>=autoFill(mailalias;%mail%)</onchange>
-			<onchange>=autoFill(mailHomeDirectory;/srv/vmail/%mail%)</onchange>
-			<onchange>=autoFill(mailStorageDirectory;maildir:/srv/vmail/%mail%/Maildir)</onchange>
-			<order>9</order>
+			<onchange>=autoFill(mailHomeDirectory;/var/mail/%mail%)</onchange>
+			<order>11</order>
 			<page>1</page>
 		</attribute>
 		<attribute id="mailalias">
-			<display>Email Aliasl</display>
+			<display>Email Alias</display>
 			<icon>mail.png</icon>
-			<order>10</order>
+			<order>12</order>
 			<page>1</page>
 		</attribute>
 		<attribute id="uidNumber">
 			<display>UID Number</display>
 			<icon>terminal.png</icon>
-			<order>11</order>
-			<page>1</page>
-			<readonly>1</readonly>
-			<value>=php.GetNextNumber(/;uidNumber)</value>
-		</attribute>
-		<attribute id="mailGidNumber">
-			<display>Email Gid Number (TEST)</display>
-			<order>12</order>
-			<page>1</page>
-			<value>5000</value>
-		</attribute>
-		<attribute id="mailUidNumber">
-			<display>Email Gid Number</display>
-			<icon>terminal.png</icon>
 			<order>13</order>
 			<page>1</page>
 			<readonly>1</readonly>
-			<value>=php.GetNextNumber(/;mailUidNumber)</value>
+			<value>=php.GetNextNumber(/;uidNumber)</value>
 		</attribute>
 	</attributes> 
 </template>

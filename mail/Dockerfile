@@ -3,5 +3,3 @@ FROM tvial/docker-mailserver:${MAIL_TAG_VERSION}
 
 RUN apt-get update \
     && apt-get install -y mc 
-
-COPY ./config/dovecot/ /etc/dovecot/conf.d/

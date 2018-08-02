@@ -1,1 +1,2 @@
+ssl = yes
 disable_plaintext_auth=no
