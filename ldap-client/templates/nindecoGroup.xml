@@ -26,10 +26,10 @@
 			<page>1</page>
 		</attribute>
 		<attribute id="gidNumber">
-			<display>GUI Number (Fot dovecot use 5000)</display>
+			<display>GUI Number</display>
 			<order>3</order>
 			<page>1</page>
-			<value>=php.GetNextNumber(/;uidNumber)</value>
+			<value>=php.GetNextNumber(/;gidNumber)</value>
 		</attribute>
 		<attribute id="memberUid">
 			<display>Members</display>

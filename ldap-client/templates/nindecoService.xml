@@ -5,18 +5,23 @@
 	<description>New Nindeco Service</description>
 	<icon>ldap-user.png</icon>
 	<invalid>0</invalid>
-	<rdn>uid</rdn>
+	<rdn>cn</rdn>
 	<!--<regexp>^ou=People,o=.*,</regexp>-->
 	<title>Generic: Nindeco Service</title>
 	<visible>1</visible>
 	<objectClasses>
-	<objectClass id="account"></objectClass>
+	<objectClass id="organizationalRole"></objectClass>
 	<objectClass id="simpleSecurityObject"></objectClass>
 	</objectClasses>
 	<attributes>
-		<attribute id="uid">
+		<attribute id="cn">
 			<display>User ID</display>
             <icon>ldap-uid.png</icon>
+			<order>1</order>
+			<page>1</page>
+		</attribute>
+		<attribute id="description">
+			<display>Description</display>
 			<order>1</order>
 			<page>1</page>
 		</attribute>				

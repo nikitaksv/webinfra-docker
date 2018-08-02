@@ -163,8 +163,8 @@ services:
       - ./roundcube/config/:/var/roundcube/config/
     environment: 
       - ROUNDCUBEMAIL_DEFAULT_HOST=${DOMAIN}
-      - ROUNDCUBEMAIL_SMTP_SERVER=tls://${DOMAIN}
-      - ROUNDCUBEMAIL_SMTP_PORT=587
+      - ROUNDCUBEMAIL_SMTP_SERVER=${DOMAIN}
+      - ROUNDCUBEMAIL_SMTP_PORT=25
       - ROUNDCUBEMAIL_DB_TYPE=mysql
       - ROUNDCUBEMAIL_DB_HOST=${MYSQL_HOST}
       - ROUNDCUBEMAIL_DB_USER=${MYSQL_USER}
@@ -204,36 +204,36 @@ services:
       - ./mail/ssl/:/ssl/
 
     environment:
-      - ENABLE_SPAMASSASSIN=1
-      - ENABLE_CLAMAV=0
-      - ENABLE_FAIL2BAN=0
-      - ENABLE_POSTGREY=1
-      - ENABLE_SASLAUTHD=1
-      - ENABLE_LDAP=1
-      - ONE_DIR=1
-      - DMS_DEBUG=1      
+      - ENABLE_SPAMASSASSIN=${ENABLE_SPAMASSASSIN}
+      - ENABLE_CLAMAV=${ENABLE_CLAMAV}
+      - ENABLE_FAIL2BAN=${ENABLE_FAIL2BAN}
+      - ENABLE_POSTGREY=${ENABLE_POSTGREY}
+      - ENABLE_SASLAUTHD=${ENABLE_SASLAUTHD}
+      - ENABLE_LDAP=${ENABLE_LDAP}
+      - ONE_DIR=${ONE_DIR}
+      - DMS_DEBUG=${DMS_DEBUG}     
+      - SA_SPAM_SUBJECT=${SA_SPAM_SUBJECT} 
       - LDAP_SERVER_HOST=${LDAP_HOSTNAME}.${DOMAIN}
-      - LDAP_SEARCH_BASE=ou=people,dc=nindeco,dc=com
-      - LDAP_BIND_DN=cn=admin,dc=nindeco,dc=com
-      - LDAP_BIND_PW=defender
-      - LDAP_QUERY_FILTER_USER=(mail=%s)
-      - LDAP_QUERY_FILTER_GROUP=(memberUid=%s)
-      - LDAP_QUERY_FILTER_ALIAS=(mailalias=%s)
-      - LDAP_QUERY_FILTER_DOMAIN=(|(mail=*@%s)(mailalias=*@%s))
-      - DOVECOT_PASS_FILTER=(&(uid=%n)(objectClass=person))
-      - DOVECOT_PASS_ATTRS=userPassword=password
-      - DOVECOT_USER_FILTER=(&(uid=%n)(objectClass=person))
-      - DOVECOT_USER_ATTRS=uidNumber=uid,mailGidNumber=gid,mailHomeDirectory=home
-      - SASLAUTHD_MECHANISMS=ldap
+      - LDAP_SEARCH_BASE=${LDAP_SEARCH_BASE}
+      - LDAP_BIND_DN=${LDAP_BIND_DN}
+      - LDAP_BIND_PW=${LDAP_BIND_PW}
+      - LDAP_QUERY_FILTER_USER=${LDAP_QUERY_FILTER_USER}
+      - LDAP_QUERY_FILTER_GROUP=${LDAP_QUERY_FILTER_GROUP}
+      - LDAP_QUERY_FILTER_ALIAS=${LDAP_QUERY_FILTER_ALIAS}
+      - LDAP_QUERY_FILTER_DOMAIN=${LDAP_QUERY_FILTER_DOMAIN}
+      - DOVECOT_PASS_FILTER=${DOVECOT_PASS_FILTER}
+      - DOVECOT_PASS_ATTRS=${DOVECOT_PASS_ATTRS}
+      - DOVECOT_USER_FILTER=${DOVECOT_USER_FILTER}
+      - DOVECOT_USER_ATTRS=${DOVECOT_USER_ATTRS}
+      - SASLAUTHD_MECHANISMS=${SASLAUTHD_MECHANISMS}
       - SASLAUTHD_LDAP_SERVER=${LDAP_HOSTNAME}.${DOMAIN}
-      - SASLAUTHD_LDAP_SEARCH_BASE=dc=nindeco,dc=com
-      - SASLAUTHD_LDAP_BIND_DN=cn=admin,dc=nindeco,dc=com
-      - SASLAUTHD_LDAP_PASSWORD=defender
-      - SASLAUTHD_LDAP_FILTER=(&(uid=%U)(objectClass=person))
+      - SASLAUTHD_LDAP_SEARCH_BASE=${SASLAUTHD_LDAP_SEARCH_BASE}
+      - SASLAUTHD_LDAP_BIND_DN=${SASLAUTHD_LDAP_BIND_DN}
+      - SASLAUTHD_LDAP_PASSWORD=${SASLAUTHD_LDAP_PASSWORD}
+      - SASLAUTHD_LDAP_FILTER=${SASLAUTHD_LDAP_FILTER}
       - POSTMASTER_ADDRESS=postmaster@${DOMAIN}
-
-      - SSL_TYPE=self-signed
-      - PERMIT_DOCKER=network
+      - SSL_TYPE=${SSL_TYPE}
+      - PERMIT_DOCKER=${PERMIT_DOCKER}
     networks: 
       default:
         ipv4_address: ${MAIL_HOST}
