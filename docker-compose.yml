@@ -33,11 +33,11 @@ services:
     volumes: 
       - ${NGINX_CONFIG_PATH}:/etc/nginx/conf.d/
     expose:
-      - '80'
-      - '443'
+      - ${NGINX_HTTP_PORT}
+      - ${NGINX_HTTPS_PORT}
     networks: 
       default:   
-        ipv4_address: 172.25.0.80 
+        ipv4_address: ${NGINX_HOST}
     restart: always
 ### LDAP ###########################
   ldap:
@@ -114,6 +114,7 @@ services:
         - REDMINE_TAG_VERSION=${REDMINE_TAG_VERSION}
     volumes: 
       - ${REDMINE_DATA_PATH}:/usr/src/redmine/files
+      - ${REDMINE_CONFIGURATION_FILE_PATH}:/usr/src/redmine/config/configuration.yml
     environment: 
       - REDMINE_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - REDMINE_DB_DATABASE=${MYSQL_DATABASE}
@@ -154,7 +155,19 @@ services:
       args: 
         - GITLAB_TAG_VERSION=${GITLAB_TAG_VERSION}
     environment: 
-      - GITLAB_OMNIBUS_CONFIG="external_url 'http://${GITLAB_HOSTNAME}.${DOMAIN}/'; gitlab_rails['lfs_enabled'] = true;"
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://${GITLAB_HOSTNAME}.${DOMAIN}/'
+        gitlab_rails['lfs_enabled'] = true
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = '${MAIL_HOST}'
+        gitlab_rails['smtp_port'] = '25'
+        gitlab_rails['smtp_domain'] = '${MAIL_HOST}'
+        gitlab_rails['smtp_authentication'] = 'plain'
+        gitlab_rails['smtp_user_name'] = 'git@${DOMAIN}'
+        gitlab_rails['smtp_password'] = 'defender'
+        gitlab_rails['smtp_enable_starttls_auto'] = true
+        gitlab_rails['smtp_tls'] = false
+        gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
     volumes: 
       - gitlab_data:/var/opt/gitlab
       - gitlab_config:/etc/gitlab

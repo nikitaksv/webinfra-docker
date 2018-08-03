@@ -1,0 +1,36 @@
+# Initial model
+dn: ou=groups,dc=nindeco,dc=com
+objectclass: organizationalUnit
+objectclass: top
+ou: groups
+# Entry 2
+dn: ou=people,dc=nindeco,dc=com
+objectclass: organizationalUnit
+objectclass: top
+ou: people
+# Entry 3
+dn: ou=services,dc=nindeco,dc=com
+objectclass: organizationalUnit
+objectclass: top
+ou: services
+# Entry 3.1
+dn: cn=git,ou=services,dc=nindeco,dc=com
+cn: git
+objectclass: organizationalRole
+objectclass: simpleSecurityObject
+objectclass: top
+userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
+# Entry 3.2
+dn: cn=mail,ou=services,dc=nindeco,dc=com
+cn: mail
+objectclass: organizationalRole
+objectclass: simpleSecurityObject
+objectclass: top
+userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
+# Entry 3.3
+dn: cn=redmine,ou=services,dc=nindeco,dc=com
+cn: redmine
+objectclass: organizationalRole
+objectclass: simpleSecurityObject
+objectclass: top
+userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
