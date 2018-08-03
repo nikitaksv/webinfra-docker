@@ -23,6 +23,22 @@ volumes:
   
 ### SERVICES ########################
 services:
+### NGINX ###########################
+  nginx:
+    container_name: ${COMPOSE_PROJECT_NAME}_${NGINX_CONTAINER_NAME}
+    build:
+      context: ./nginx
+      args: 
+        - NGINX_TAG_VERSION=${NGINX_TAG_VERSION}
+    volumes: 
+      - ${NGINX_CONFIG_PATH}:/etc/nginx/conf.d/
+    expose:
+      - '80'
+      - '443'
+    networks: 
+      default:   
+        ipv4_address: 172.25.0.80 
+    restart: always
 ### LDAP ###########################
   ldap:
     container_name: ${COMPOSE_PROJECT_NAME}_${LDAP_CONTAINER_NAME}
@@ -109,8 +125,6 @@ services:
         ipv4_address: ${REDMINE_HOST}
         aliases: 
           - ${REDMINE_HOSTNAME}.${DOMAIN}
-    expose:
-      - ${REDMINE_EXPOSE}
     restart: always
 
 ### MYSQL ##########################
