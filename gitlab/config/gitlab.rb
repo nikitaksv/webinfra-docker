@@ -15,10 +15,10 @@ gitlab_rails['ldap_servers'] = {
   'encryption' => 'plain',
   'allow_username_or_email_login' => 'false',
   'verify_certificates' => true,
-  'bind_dn' => 'CN=admin,DC=nindeco,DC=com',
+  'bind_dn' => 'uid=git,ou=services,dc=nindeco,dc=com',
   'password' => 'defender',
   'active_directory' => true,
   'base' => 'OU=people,DC=nindeco,DC=com',
-  'user_filter' => '(objectClass=person)'
+  'user_filter' => '(&(objectClass=posixAccount)(memberof=cn=users,ou=groups,dc=nindeco,dc=com))'
   }
 }

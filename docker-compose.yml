@@ -51,6 +51,7 @@ services:
       - ldap_data:/var/lib/ldap
       - ldap_config:/etc/ldap/slapd.d
       - ldap_data_backup:/data/backup
+      - ${LDAP_SETUP_CONFIG_PATH}:/container/service/slapd/assets/config/bootstrap/ldif/custom
     environment: 
       - LDAP_DOMAIN=${DOMAIN}
       - LDAP_ORGANISATION=${LDAP_ORGANISATION}
@@ -59,6 +60,7 @@ services:
       - LDAP_BACKUP_CONFIG_CRON_EXP=${LDAP_BACKUP_CONFIG_CRON_EXP}
       - LDAP_BACKUP_DATA_CRON_EXP=${LDAP_BACKUP_DATA_CRON_EXP}
       - LDAP_BACKUP_TTL=${LDAP_BACKUP_TTL}
+      - LDAP_REMOVE_CONFIG_AFTER_SETUP=${LDAP_REMOVE_CONFIG_AFTER_SETUP}
     networks: 
       default:
         aliases: 

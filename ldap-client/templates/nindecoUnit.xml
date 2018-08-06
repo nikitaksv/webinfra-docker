@@ -2,12 +2,12 @@
 <!DOCTYPE template SYSTEM "../template.dtd">
 <template>
 	<askcontainer>1</askcontainer>
-	<description>New Nindeco User</description>
+	<description>New Nindeco Unit</description>
 	<icon>ldap-user.png</icon>
 	<invalid>0</invalid>
 	<rdn>uid</rdn>
 	<!--<regexp>^ou=People,o=.*,</regexp>-->
-	<title>Generic: Nindeco User</title>
+	<title>Generic: Nindeco Unit</title>
 	<visible>1</visible>
 	<objectClasses>
 	<objectClass id="inetOrgPerson"></objectClass>
@@ -28,7 +28,6 @@
 			<display>Last name</display>
 			<onchange>=autoFill(cn;%givenName% %sn%)</onchange>
 			<onchange>=autoFill(uid;%sn/l%)</onchange>
-			<!-- <onchange>=autoFill(homeDirectory;/home/users/%uid|0-1/l%/%uid%)</onchange> -->
 			<order>2</order>
 			<page>1</page>
 		</attribute>
@@ -38,7 +37,7 @@
 			<page>1</page>
 		</attribute>
 		<attribute id="uid">
-			<display>User ID</display>
+			<display>Unit ID</display>
 			<onchange>=autoFill(homeDirectory;/home/users/%uid%)</onchange>
 			<onchange>=autoFill(mail;%uid%@nindeco.com)</onchange>
 			<order>4</order>
@@ -47,11 +46,6 @@
 		</attribute>				
 		<attribute id="userPassword">
 			<display>Password</display>
-			<!-- <helper>
-					<display>Encryption</display>
-					<id>enc</id>
-					<value>=php.PasswordEncryptionTypes()</value>
-			</helper> -->
 			<icon>lock.png</icon>
 			<order>5</order>
 			<page>1</page>
@@ -59,33 +53,39 @@
 			<spacer>1</spacer>
 			<verify>1</verify>
 		</attribute>
+		<attribute id="memberOf">
+			<display>Group member (If you create service then use: dn="cn=services,ou=groups,dc=nindeco,dc=com")</display>
+			<order>6</order>
+			<page>1</page>
+			<value>cn=users,ou=groups,dc=nindeco,dc=com</value>
+		</attribute>
 		<attribute id="mailEnabled">
 			<display>Email Enabled</display>
-			<order>6</order>
+			<order>7</order>
 			<page>1</page>
 		</attribute>	
 		<attribute id="gidNumber">
-			<display>GID Number</display>
-			<order>7</order>
+			<display>GID Number (If you create service then use: 500)</display>
+			<order>8</order>
 			<page>1</page>
-			<value><![CDATA[=php.PickList(/;(&(objectClass=posixGroup));gidNumber;%cn%;;;;cn)]]></value>
+			<value>501</value>
 		</attribute>
 		<attribute id="homeDirectory">
 			<display>Home directory</display>
 			<icon>folder.png</icon>
-			<order>8</order>
+			<order>9</order>
 			<page>1</page>
 		</attribute>
 		<attribute id="mailUidNumber">
 			<display>Mail UID Number</display>
-			<order>9</order>
+			<order>10</order>
 			<readonly>1</readonly>
 			<value>5000</value>
 			<page>1</page>
 		</attribute>
 		<attribute id="mailGidNumber">
 			<display>Mail GID Number</display>
-			<order>9</order>
+			<order>11</order>
 			<readonly>1</readonly>
 			<value>5000</value>
 			<page>1</page>
@@ -93,22 +93,23 @@
 		<attribute id="mail">
 			<display>Email</display>
 			<icon>mail.png</icon>
-			<onchange>=autoFill(mailalias;%mail%)</onchange>
-			<order>10</order>
+			<onchange>=autoFill(postfixMailAlias;%mail%)</onchange>
+			<order>12</order>
 			<page>1</page>
 		</attribute>
-		<attribute id="mailalias">
+		<attribute id="postfixMailAlias">
 			<display>Email Alias</display>
 			<icon>mail.png</icon>
-			<order>11</order>
+			<order>13</order>
 			<page>1</page>
 		</attribute>
 		<attribute id="uidNumber">
 			<display>UID Number</display>
 			<icon>terminal.png</icon>
-			<order>12</order>
+			<order>14</order>
 			<page>1</page>
 			<readonly>1</readonly>
 			<value>=php.GetNextNumber(/;uidNumber)</value>
 		</attribute>
+	</attributes>
 </template>
