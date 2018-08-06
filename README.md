@@ -1,5 +1,6 @@
 # nindeco
 Redmine Ldap configuration:
+
     Name     = Some random description
     Host     = ldap.nindeco.com
     Port     = 389
