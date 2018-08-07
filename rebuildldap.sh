@@ -1,6 +1,6 @@
 #!/bin/sh
 echo '===> Stop & Remove container LDAP'
-docker stop nindeco_ldap
+docker kill nindeco_ldap
 docker rm nindeco_ldap
 echo '==> Clear volumes'
 docker volume rm nindeco_ldap_data

@@ -10,17 +10,23 @@
 	<title>Generic: Nindeco Group</title>
 	<visible>1</visible>
 	<objectClasses>
-	<objectClass id="groupOfNames"></objectClass>
+	<objectClass id="groupOfNames"></objectClass> 
+	<objectClass id="mailGroup"></objectClass>
 	</objectClasses>
 	<attributes>
 		<attribute id="cn">
 			<display>CN</display>
 			<order>1</order>
 			<page>1</page>
+		</attribute>
+		<attribute id="mail">
+			<display>Mail</display>
+			<order>2</order>
+			<page>1</page>
 		</attribute>				
 		<attribute id="member">
 			<display>Members</display>
-			<order>2</order>
+			<order>3</order>
 			<page>1</page>
 			<value><![CDATA[=php.MultiList(/;(objectClass=person);dn)]]></value>
 		</attribute>
