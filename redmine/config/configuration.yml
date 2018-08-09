@@ -1,9 +1,11 @@
 production:
-  delivery_method: :smtp
-  smtp_settings:
-    address: mail
-    port: 25
-    domain: nindeco.com
-    authentication: :plain
-    user_name: task@nindeco.com
-    password: defender
+  email_delivery:
+    delivery_method: :smtp
+    smtp_settings:
+      address: '172.25.0.8'
+      port: 25
+      openssl_verify_mode: none
+      domain: 'nindeco.com'
+      authentication: :plain
+      user_name: 'task@nindeco.com'
+      password: 'defender'

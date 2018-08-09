@@ -7,4 +7,4 @@ RUN apt-get update \
 ADD config/config.php /container/service/phpldapadmin/assets/config/config.php
 
 ADD templates /templates
-RUN chmod 777 -R /templates
+RUN chmod 644 -R /templates

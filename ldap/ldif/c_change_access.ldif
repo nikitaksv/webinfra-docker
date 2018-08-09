@@ -1,16 +1,21 @@
-dn: olcDatabase={1}mdb,cn=config
+dn: olcDatabase={1}{{ LDAP_BACKEND }},cn=config
 changetype: modify
 delete: olcAccess
 -
 add: olcAccess
-olcAccess: to attrs=userPassword,shadowLastChange by self write by anonymous auth.
-   by dn.children="ou=services,dc=nindeco,dc=com" read.
-   by group.exact="cn=admin,cn=users,ou=groups,dc=nindeco,dc=com" manage.
-   by group.exact="cn=manager,cn=users,ou=groups,dc=nindeco,dc=com" write.
-   by dn="cn=admin,dc=nindeco,dc=com" write.
+olcAccess: to attrs=userPassword,shadowLastChange
+   by self write.
+   by anonymous auth.
+   by dn.children="ou=services,{{ LDAP_BASE_DN }}" read.
+   by group.exact="cn=admin,cn=users,ou=groups,{{ LDAP_BASE_DN }}" manage.
+   by group.exact="cn=manager,cn=users,ou=groups,{{ LDAP_BASE_DN }}" write.
+   by dn="cn=admin,{{ LDAP_BASE_DN }}" write.
    by * none
-olcAccess: to * by self write by anonymous auth.
-   by dn.children="ou=services,dc=nindeco,dc=com" read.
-   by group.exact="cn=admin,cn=users,ou=groups,dc=nindeco,dc=com" manage.
-   by group.exact="cn=manager,cn=users,ou=groups,dc=nindeco,dc=com" write.
+olcAccess: to * 
+   by self write.
+   by anonymous auth.
+   by dn.children="ou=services,{{ LDAP_BASE_DN }}" read.
+   by group.exact="cn=admin,cn=users,ou=groups,{{ LDAP_BASE_DN }}" manage.
+   by group.exact="cn=manager,cn=users,ou=groups,{{ LDAP_BASE_DN }}" write.
    by * none
+

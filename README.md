@@ -16,3 +16,18 @@ Redmine Ldap configuration:
     Firstname = givenName
     Lastname  = sn
     Email     = mail
+
+
+Gitlab SMTP documentation: https://docs.gitlab.com/omnibus/settings/smtp.html
+
+TEST SMTP:  
+In gitlab container execute:
+```shell
+gitlab-rails console
+```
+Wait when console is loaded
+```rb
+Notify.test_email('admin@nindeco.com', 'Message Subject', 'Message Body').deliver_now
+```
+
+

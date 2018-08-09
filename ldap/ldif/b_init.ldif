@@ -1,4 +1,4 @@
-# LDIF Export for dc=nindeco,dc=com
+# LDIF Export for {{ LDAP_BASE_DN }}
 # Server: ldapserver.nindeco.com (ldapserver.nindeco.com)
 # Search Scope: sub
 # Search Filter: (objectClass=*)
@@ -11,30 +11,30 @@ version: 1
 ###
 ### This entries auto generate when deploy service
 ###
-# # Entry 1: dc=nindeco,dc=com
-# dn: dc=nindeco,dc=com
+# # Entry 1: {{ LDAP_BASE_DN }}
+# dn: {{ LDAP_BASE_DN }}
 # dc: nindeco
 # o: nindeco
 # objectclass: top
 # objectclass: dcObject
 # objectclass: organization
 
-# # Entry 2: cn=admin,dc=nindeco,dc=com
-# dn: cn=admin,dc=nindeco,dc=com
+# # Entry 2: cn=admin,{{ LDAP_BASE_DN }}
+# dn: cn=admin,{{ LDAP_BASE_DN }}
 # cn: admin
 # description: LDAP administrator
 # objectclass: simpleSecurityObject
 # objectclass: organizationalRole
 # userpassword: {SSHA}RqmAgq6JWeH792FgrjpMnytGtdmG/BDN
 
-# Entry 3: ou=groups,dc=nindeco,dc=com
-dn: ou=groups,dc=nindeco,dc=com
+# Entry 3: ou=groups,{{ LDAP_BASE_DN }}
+dn: ou=groups,{{ LDAP_BASE_DN }}
 objectclass: organizationalUnit
 objectclass: top
 ou: groups
 
-# Entry 4: cn=services,ou=groups,dc=nindeco,dc=com
-dn: cn=services,ou=groups,dc=nindeco,dc=com
+# Entry 4: cn=services,ou=groups,{{ LDAP_BASE_DN }}
+dn: cn=services,ou=groups,{{ LDAP_BASE_DN }}
 cn: services
 description: Users of this group have read access to the entire database
 gidnumber: 500
@@ -45,73 +45,73 @@ memberuid: redmine
 objectclass: posixGroup
 objectclass: top
 
-# Entry 5: cn=users,ou=groups,dc=nindeco,dc=com
-dn: cn=users,ou=groups,dc=nindeco,dc=com
+# Entry 5: cn=users,ou=groups,{{ LDAP_BASE_DN }}
+dn: cn=users,ou=groups,{{ LDAP_BASE_DN }}
 cn: users
 gidnumber: 501
 objectclass: posixGroup
 objectclass: top
 
-# Entry 6: cn=admin,cn=users,ou=groups,dc=nindeco,dc=com
-dn: cn=admin,cn=users,ou=groups,dc=nindeco,dc=com
+# Entry 6: cn=admin,cn=users,ou=groups,{{ LDAP_BASE_DN }}
+dn: cn=admin,cn=users,ou=groups,{{ LDAP_BASE_DN }}
 cn: admin
-member: uid=admin,ou=people,dc=nindeco,dc=com
+member: uid=admin,ou=people,{{ LDAP_BASE_DN }}
 mail: admins@nindeco.com
 objectclass: groupOfNames
 objectclass: mailGroup
 objectclass: top
 
-# Entry 7: cn=client,cn=users,ou=groups,dc=nindeco,dc=com
-dn: cn=client,cn=users,ou=groups,dc=nindeco,dc=com
+# Entry 7: cn=client,cn=users,ou=groups,{{ LDAP_BASE_DN }}
+dn: cn=client,cn=users,ou=groups,{{ LDAP_BASE_DN }}
 cn: client
-member: uid=ivanov,ou=people,dc=nindeco,dc=com
+member: uid=ivanov,ou=people,{{ LDAP_BASE_DN }}
 mail: clients@nindeco.com
 objectclass: groupOfNames
 objectclass: mailGroup
 objectclass: top
 
-# Entry 8: cn=employee,cn=users,ou=groups,dc=nindeco,dc=com
-dn: cn=employee,cn=users,ou=groups,dc=nindeco,dc=com
+# Entry 8: cn=employee,cn=users,ou=groups,{{ LDAP_BASE_DN }}
+dn: cn=employee,cn=users,ou=groups,{{ LDAP_BASE_DN }}
 cn: employee
-member: uid=ivanov,ou=people,dc=nindeco,dc=com
+member: uid=ivanov,ou=people,{{ LDAP_BASE_DN }}
 mail: employees@nindeco.com
 objectclass: groupOfNames
 objectclass: mailGroup
 objectclass: top
 
-# Entry 9: cn=manager,cn=users,ou=groups,dc=nindeco,dc=com
-dn: cn=manager,cn=users,ou=groups,dc=nindeco,dc=com
+# Entry 9: cn=manager,cn=users,ou=groups,{{ LDAP_BASE_DN }}
+dn: cn=manager,cn=users,ou=groups,{{ LDAP_BASE_DN }}
 cn: manager
-member: uid=manager,ou=people,dc=nindeco,dc=com
+member: uid=manager,ou=people,{{ LDAP_BASE_DN }}
 mail: managers@nindeco.com
 objectclass: groupOfNames
 objectclass: mailGroup
 objectclass: top
 
-# Entry 10: cn=manager,cn=users,ou=groups,dc=nindeco,dc=com
-dn: cn=all,cn=users,ou=groups,dc=nindeco,dc=com
+# Entry 10: cn=manager,cn=users,ou=groups,{{ LDAP_BASE_DN }}
+dn: cn=all,cn=users,ou=groups,{{ LDAP_BASE_DN }}
 cn: all
-member: uid=admin,ou=people,dc=nindeco,dc=com
-member: uid=manager,ou=people,dc=nindeco,dc=com
-member: uid=ivanov,ou=people,dc=nindeco,dc=com
+member: uid=admin,ou=people,{{ LDAP_BASE_DN }}
+member: uid=manager,ou=people,{{ LDAP_BASE_DN }}
+member: uid=ivanov,ou=people,{{ LDAP_BASE_DN }}
 mail: all@nindeco.com
 objectclass: groupOfNames
 objectclass: mailGroup
 objectclass: top
 
-# Entry 11: ou=people,dc=nindeco,dc=com
-dn: ou=people,dc=nindeco,dc=com
+# Entry 11: ou=people,{{ LDAP_BASE_DN }}
+dn: ou=people,{{ LDAP_BASE_DN }}
 objectclass: organizationalUnit
 objectclass: top
 ou: people
 
-# Entry 12: uid=admin,ou=people,dc=nindeco,dc=com
-dn: uid=admin,ou=people,dc=nindeco,dc=com
+# Entry 12: uid=admin,ou=people,{{ LDAP_BASE_DN }}
+dn: uid=admin,ou=people,{{ LDAP_BASE_DN }}
 cn: Company Admin
 gidnumber: 501
 givenname: Company
 homedirectory: /home/users/admin
-memberof: cn=users,ou=groups,dc=nindeco,dc=com
+memberof: cn=users,ou=groups,{{ LDAP_BASE_DN }}
 mail: admin@nindeco.com
 mailenabled: TRUE
 mailgidnumber: 5000
@@ -128,13 +128,13 @@ uid: admin
 uidnumber: 1004
 userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
 
-# Entry 13: uid=ivanov,ou=people,dc=nindeco,dc=com
-dn: uid=ivanov,ou=people,dc=nindeco,dc=com
+# Entry 13: uid=ivanov,ou=people,{{ LDAP_BASE_DN }}
+dn: uid=ivanov,ou=people,{{ LDAP_BASE_DN }}
 cn: Ivan Ivanov
 gidnumber: 501
 givenname: Ivan
 homedirectory: /home/users/ivanov
-memberof: cn=users,ou=groups,dc=nindeco,dc=com
+memberof: cn=users,ou=groups,{{ LDAP_BASE_DN }}
 mail: ivanov@nindeco.com
 mailenabled: TRUE
 mailgidnumber: 5000
@@ -151,13 +151,13 @@ uid: ivanov
 uidnumber: 1006
 userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
 
-# Entry 14: uid=manager,ou=people,dc=nindeco,dc=com
-dn: uid=manager,ou=people,dc=nindeco,dc=com
+# Entry 14: uid=manager,ou=people,{{ LDAP_BASE_DN }}
+dn: uid=manager,ou=people,{{ LDAP_BASE_DN }}
 cn: Company Manager
 gidnumber: 501
 givenname: Company
 homedirectory: /home/users/manager
-memberof: cn=users,ou=groups,dc=nindeco,dc=com
+memberof: cn=users,ou=groups,{{ LDAP_BASE_DN }}
 mail: manager@nindeco.com
 mailenabled: TRUE
 mailgidnumber: 5000
@@ -174,19 +174,19 @@ uid: manager
 uidnumber: 1005
 userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
 
-# Entry 15: ou=services,dc=nindeco,dc=com
-dn: ou=services,dc=nindeco,dc=com
+# Entry 15: ou=services,{{ LDAP_BASE_DN }}
+dn: ou=services,{{ LDAP_BASE_DN }}
 objectclass: organizationalUnit
 objectclass: top
 ou: services
 
-# Entry 16: uid=cloud,ou=services,dc=nindeco,dc=com
-dn: uid=cloud,ou=services,dc=nindeco,dc=com
+# Entry 16: uid=cloud,ou=services,{{ LDAP_BASE_DN }}
+dn: uid=cloud,ou=services,{{ LDAP_BASE_DN }}
 cn: Service Cloud
 gidnumber: 500
 givenname: Service
 homedirectory: /home/users/cloud
-memberof: cn=services,ou=groups,dc=nindeco,dc=com
+memberof: cn=services,ou=groups,{{ LDAP_BASE_DN }}
 mail: cloud@nindeco.com
 postfixmailalias: cloud@nindeco.com
 mailenabled: TRUE
@@ -203,13 +203,13 @@ uid: cloud
 uidnumber: 1003
 userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
 
-# Entry 17: uid=git,ou=services,dc=nindeco,dc=com
-dn: uid=git,ou=services,dc=nindeco,dc=com
+# Entry 17: uid=git,ou=services,{{ LDAP_BASE_DN }}
+dn: uid=git,ou=services,{{ LDAP_BASE_DN }}
 cn: Service Git
 gidnumber: 500
 givenname: Service
 homedirectory: /home/users/git
-memberof: cn=services,ou=groups,dc=nindeco,dc=com
+memberof: cn=services,ou=groups,{{ LDAP_BASE_DN }}
 mail: git@nindeco.com
 postfixmailalias: git@nindeco.com
 mailenabled: TRUE
@@ -226,13 +226,13 @@ uid: git
 uidnumber: 1002
 userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
 
-# Entry 18: uid=mail,ou=services,dc=nindeco,dc=com
-dn: uid=mail,ou=services,dc=nindeco,dc=com
+# Entry 18: uid=mail,ou=services,{{ LDAP_BASE_DN }}
+dn: uid=mail,ou=services,{{ LDAP_BASE_DN }}
 cn: Service Mail
 gidnumber: 500
 givenname: Service
 homedirectory: /home/users/mail
-memberof: cn=services,ou=groups,dc=nindeco,dc=com
+memberof: cn=services,ou=groups,{{ LDAP_BASE_DN }}
 mail: postmaster@nindeco.com
 postfixmailalias: postmaster@nindeco.com
 mailenabled: TRUE
@@ -249,13 +249,13 @@ uid: mail
 uidnumber: 1001
 userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
 
-# Entry 19: uid=redmine,ou=services,dc=nindeco,dc=com
-dn: uid=redmine,ou=services,dc=nindeco,dc=com
+# Entry 19: uid=redmine,ou=services,{{ LDAP_BASE_DN }}
+dn: uid=redmine,ou=services,{{ LDAP_BASE_DN }}
 cn: Service Redmine
 gidnumber: 500
 givenname: Service
 homedirectory: /home/users/redmine
-memberof: cn=services,ou=groups,dc=nindeco,dc=com
+memberof: cn=services,ou=groups,{{ LDAP_BASE_DN }}
 mail: task@nindeco.com
 postfixmailalias: task@nindeco.com
 mailenabled: TRUE
