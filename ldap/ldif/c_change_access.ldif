@@ -4,18 +4,18 @@ delete: olcAccess
 -
 add: olcAccess
 olcAccess: to attrs=userPassword,shadowLastChange
-   by self write.
-   by anonymous auth.
-   by dn.children="ou=services,{{ LDAP_BASE_DN }}" read.
    by group.exact="cn=admin,cn=users,ou=groups,{{ LDAP_BASE_DN }}" manage.
+   by dn.children="ou=services,{{ LDAP_BASE_DN }}" read.
    by group.exact="cn=manager,cn=users,ou=groups,{{ LDAP_BASE_DN }}" write.
    by dn="cn=admin,{{ LDAP_BASE_DN }}" write.
-   by * none
-olcAccess: to * 
    by self write.
    by anonymous auth.
-   by dn.children="ou=services,{{ LDAP_BASE_DN }}" read.
+   by * none
+olcAccess: to * 
    by group.exact="cn=admin,cn=users,ou=groups,{{ LDAP_BASE_DN }}" manage.
    by group.exact="cn=manager,cn=users,ou=groups,{{ LDAP_BASE_DN }}" write.
+   by dn.children="ou=services,{{ LDAP_BASE_DN }}" read.
+   by self read.
+   by anonymous auth.
    by * none
 

@@ -20,9 +20,11 @@ volumes:
   gitlab_config:
   maildata:
   mailstate:
+  nextcloud_all_data:
   
 ### SERVICES ########################
 services:
+
 ### NGINX ###########################
   nginx:
     container_name: ${COMPOSE_PROJECT_NAME}_${NGINX_CONTAINER_NAME}
@@ -32,6 +34,7 @@ services:
         - NGINX_TAG_VERSION=${NGINX_TAG_VERSION}
     volumes: 
       - ${NGINX_CONFIG_PATH}:/etc/nginx/conf.d/
+      - nextcloud_all_data:/var/www/html:ro
     expose:
       - ${NGINX_HTTP_PORT}
       - ${NGINX_HTTPS_PORT}
@@ -39,6 +42,7 @@ services:
       default:   
         ipv4_address: ${NGINX_HOST}
     restart: always
+
 ### LDAP ###########################
   ldap:
     container_name: ${COMPOSE_PROJECT_NAME}_${LDAP_CONTAINER_NAME}
@@ -85,7 +89,7 @@ services:
         ipv4_address: ${LDAP_CLIENT_HOST}
         aliases: 
           - ${LDAP_CLIENT_HOSTNAME}.${DOMAIN}
-    
+
 ### BIND ###########################
   bind:
     container_name: ${COMPOSE_PROJECT_NAME}_${BIND_CONTAINER_NAME}
@@ -225,13 +229,11 @@ services:
       - "587:587"
       - "465:465"
       - "993:993"
-
     volumes:
       - maildata:/var/mail
       - mailstate:/var/mail-state
       - ./mail/config/:/tmp/docker-mailserver/
       - ./mail/ssl/:/ssl/
-
     environment:
       - ENABLE_SPAMASSASSIN=${ENABLE_SPAMASSASSIN}
       - ENABLE_CLAMAV=${ENABLE_CLAMAV}
@@ -269,4 +271,49 @@ services:
     cap_add:
       - NET_ADMIN
       - SYS_PTRACE
-  
+
+### NEXTCLOUD ######################
+  nextcloud:
+    container_name: ${COMPOSE_PROJECT_NAME}_${NEXTCLOUD_CONTAINER_NAME}
+    build:
+      context: ./nextcloud
+      args: 
+        - NEXTCLOUD_TAG_VERSION=${NEXTCLOUD_TAG_VERSION}
+    volumes: 
+      - nextcloud_all_data:/var/www/html
+    environment: 
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_DATABASE=${NEXTCLOUD_MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+    networks: 
+      default:   
+        ipv4_address: ${NEXTCLOUD_HOST}
+        aliases: 
+          - ${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN}
+    restart: always
+
+### NGINX-PROXY ######################
+  nginx-proxy:
+    container_name: ${COMPOSE_PROJECT_NAME}_${NGINXPROXY_CONTAINER_NAME}
+    build:
+      context: ./nginx-proxy
+      args: 
+        - NGINXPROXY_TAG_VERSION=${NGINXPROXY_TAG_VERSION}
+    # volumes: 
+    #   - nextcloud_all_data:/var/www/html
+    # environment: 
+    #   - MYSQL_HOST=${MYSQL_HOST}
+    #   - MYSQL_DATABASE=${NEXTCLOUD_MYSQL_DATABASE}
+    #   - MYSQL_USER=${MYSQL_USER}
+    #   - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    #   - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
+    #   - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+    # networks: 
+    #   default:   
+    #     ipv4_address: ${NEXTCLOUD_HOST}
+    #     aliases: 
+    #       - ${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN}
+    restart: always
