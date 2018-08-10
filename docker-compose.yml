@@ -2,6 +2,7 @@ version: '3.4'
 
 ### NETWORKS #######################
 networks: 
+  proxy:
   default: 
     driver: bridge
     ipam:
@@ -18,9 +19,12 @@ volumes:
   bind_data:
   gitlab_data:
   gitlab_config:
-  maildata:
-  mailstate:
-  nextcloud_all_data:
+  mail_data:
+  mail_state:
+  cloud_data:
+  letsencrypt_certs:
+  letsencrypt_vhost.d:
+  letsencrypt_html:
   
 ### SERVICES ########################
 services:
@@ -29,16 +33,21 @@ services:
   nginx:
     container_name: ${COMPOSE_PROJECT_NAME}_${NGINX_CONTAINER_NAME}
     build:
-      context: ./nginx
+      context: ./services/nginx
       args: 
         - NGINX_TAG_VERSION=${NGINX_TAG_VERSION}
     volumes: 
       - ${NGINX_CONFIG_PATH}:/etc/nginx/conf.d/
-      - nextcloud_all_data:/var/www/html:ro
+      - cloud_data:/var/www/html:ro
+    environment: 
+      - VIRTUAL_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN}
+      - LETSENCRYPT_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
     expose:
       - ${NGINX_HTTP_PORT}
       - ${NGINX_HTTPS_PORT}
     networks: 
+      proxy:
       default:   
         ipv4_address: ${NGINX_HOST}
     restart: always
@@ -48,7 +57,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}_${LDAP_CONTAINER_NAME}
     hostname: ${LDAP_HOSTNAME}.${DOMAIN}
     build:
-      context: ./ldap
+      context: ./services/ldap
       args: 
         - LDAP_TAG_VERSION=${LDAP_TAG_VERSION}
     volumes: 
@@ -74,15 +83,19 @@ services:
   ldap-client:
     container_name: ${COMPOSE_PROJECT_NAME}_${LDAP_CLIENT_CONTAINER_NAME}
     build:
-      context: ./ldap-client
+      context: ./services/ldap-client
       args: 
         - LDAP_CLIENT_TAG_VERSION=${LDAP_CLIENT_TAG_VERSION}
     environment:
       - PHPLDAPADMIN_LDAP_HOSTS=${LDAP_HOSTNAME}.${DOMAIN}
+      - VIRTUAL_HOST=${LDAP_CLIENT_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_HOST=${LDAP_CLIENT_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
     depends_on:
       - ldap
     expose:
       - ${LDAP_CLIENT_EXPOSE}
+      - 443
     restart: always
     networks: 
       default:
@@ -94,11 +107,17 @@ services:
   bind:
     container_name: ${COMPOSE_PROJECT_NAME}_${BIND_CONTAINER_NAME}
     build:
-      context: ./bind
+      context: ./services/bind
       args: 
         - BIND_TAG_VERSION=${BIND_TAG_VERSION}
-    expose: 
-      - ${BIND_EXPOSE}
+    environment: 
+      - VIRTUAL_HOST=${BIND_HOSTNAME}.${DOMAIN}
+      - VIRTUAL_PORT=${BIND_WEDMIN_EXPOSE}
+      - LETSENCRYPT_HOST=${BIND_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
+    ports: 
+      - ${BIND_EXPOSE}:${BIND_EXPOSE}
+    expose:
       - ${BIND_WEDMIN_EXPOSE}
     restart: always
     volumes:
@@ -114,7 +133,7 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}_${REDMINE_CONTAINER_NAME}
     hostname: ${REDMINE_HOSTNAME}.${DOMAIN}
     build:
-      context: ./redmine
+      context: ./services/redmine
       args: 
         - REDMINE_TAG_VERSION=${REDMINE_TAG_VERSION}
     volumes: 
@@ -124,8 +143,15 @@ services:
       - REDMINE_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - REDMINE_DB_DATABASE=${MYSQL_DATABASE}
       - REDMINE_DB_MYSQL=${MYSQL_HOST}
+      - VIRTUAL_HOST=${REDMINE_HOSTNAME}.${DOMAIN}
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=${REDMINE_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
     depends_on: 
       - mysql
+    expose: 
+      - 80
+      - 443
     networks: 
       default:
         ipv4_address: ${REDMINE_HOST}
@@ -137,7 +163,7 @@ services:
   mysql:
     container_name: ${COMPOSE_PROJECT_NAME}_${MYSQL_CONTAINER_NAME}
     build:
-      context: ./mysql
+      context: ./services/mysql
       args: 
         - MYSQL_TAG_VERSION=${MYSQL_TAG_VERSION}
     environment: 
@@ -156,7 +182,7 @@ services:
   gitlab:
     container_name: ${COMPOSE_PROJECT_NAME}_${GITLAB_CONTAINER_NAME}
     build:
-      context: ./gitlab
+      context: ./services/gitlab
       args: 
         - GITLAB_TAG_VERSION=${GITLAB_TAG_VERSION}
     environment: 
@@ -174,11 +200,17 @@ services:
         gitlab_rails['gitlab_email_from'] = 'git@${DOMAIN}'
         gitlab_rails['smtp_tls'] = false
         gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
+      VIRTUAL_HOST: ${GITLAB_HOSTNAME}.${DOMAIN}
+      LETSENCRYPT_HOST: ${GITLAB_HOSTNAME}.${DOMAIN}
+      LETSENCRYPT_EMAIL: admin@${DOMAIN}
     volumes: 
       - gitlab_data:/var/opt/gitlab
       - gitlab_config:/etc/gitlab
       - ${GITLAB_LDAP_CONFIG_PATH}:/etc/gitlab/gitlab.rb
       - ${GITLAB_LOGS_PATH}:/var/log/gitlab
+    expose: 
+      - 80
+      - 443
     networks: 
       default:
         ipv4_address: ${GITLAB_HOST}
@@ -190,11 +222,11 @@ services:
   roundcube:
     container_name: ${COMPOSE_PROJECT_NAME}_${ROUNDCUBEMAIL_CONTAINER_NAME}
     build:
-      context: ./roundcube
+      context: ./services/roundcube
       args: 
         - ROUNDCUBEMAIL_TAG_VERSION=${ROUNDCUBEMAIL_TAG_VERSION}
     volumes: 
-      - ./roundcube/config/:/var/roundcube/config/
+      - ${ROUNDCUBEMAIL_CONFIG_PATH}:/var/roundcube/config/
     environment: 
       - ROUNDCUBEMAIL_DEFAULT_HOST=${MAIL_HOST}
       - ROUNDCUBEMAIL_SMTP_SERVER=${MAIL_HOST}
@@ -204,6 +236,9 @@ services:
       - ROUNDCUBEMAIL_DB_USER=${MYSQL_USER}
       - ROUNDCUBEMAIL_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - ROUNDCUBEMAIL_DB_NAME=${ROUNDCUBEMAIL_DB_NAME}
+      - VIRTUAL_HOST=${ROUNDCUBEMAIL_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_HOST=${ROUNDCUBEMAIL_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
     networks: 
       default:
         ipv4_address: ${ROUNDCUBEMAIL_HOST}
@@ -220,7 +255,7 @@ services:
     domainname: ${DOMAIN}
     container_name: ${COMPOSE_PROJECT_NAME}_${MAIL_CONTAINER_NAME}
     build:
-      context: ./mail
+      context: ./services/mail
       args: 
         - MAIL_TAG_VERSION=${MAIL_TAG_VERSION}
     ports:
@@ -230,8 +265,8 @@ services:
       - "465:465"
       - "993:993"
     volumes:
-      - maildata:/var/mail
-      - mailstate:/var/mail-state
+      - mail_data:/var/mail
+      - mail_state:/var/mail-state
       - ./mail/config/:/tmp/docker-mailserver/
       - ./mail/ssl/:/ssl/
     environment:
@@ -265,22 +300,29 @@ services:
       - POSTMASTER_ADDRESS=postmaster@${DOMAIN}
       - SSL_TYPE=${SSL_TYPE}
       - PERMIT_DOCKER=${PERMIT_DOCKER}
+      - VIRTUAL_HOST=smtp.${DOMAIN},imap.${DOMAIN}
+      - VIRTUAL_PORT=25,143,587,465,993
+      - LETSENCRYPT_HOST=smtp.${DOMAIN},imap.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
     networks: 
       default:
         ipv4_address: ${MAIL_HOST}
+        aliases: 
+          - smtp.${DOMAIN}
+          - imap.${DOMAIN}
     cap_add:
       - NET_ADMIN
       - SYS_PTRACE
 
 ### NEXTCLOUD ######################
-  nextcloud:
+  cloud:
     container_name: ${COMPOSE_PROJECT_NAME}_${NEXTCLOUD_CONTAINER_NAME}
     build:
-      context: ./nextcloud
+      context: ./services/cloud
       args: 
         - NEXTCLOUD_TAG_VERSION=${NEXTCLOUD_TAG_VERSION}
     volumes: 
-      - nextcloud_all_data:/var/www/html
+      - cloud_data:/var/www/html
     environment: 
       - MYSQL_HOST=${MYSQL_HOST}
       - MYSQL_DATABASE=${NEXTCLOUD_MYSQL_DATABASE}
@@ -289,31 +331,52 @@ services:
       - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
       - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
     networks: 
+      proxy:
       default:   
         ipv4_address: ${NEXTCLOUD_HOST}
         aliases: 
           - ${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN}
     restart: always
 
-### NGINX-PROXY ######################
-  nginx-proxy:
+### NGINXPROXY #####################
+  nginxproxy:
     container_name: ${COMPOSE_PROJECT_NAME}_${NGINXPROXY_CONTAINER_NAME}
     build:
-      context: ./nginx-proxy
-      args: 
+      context: ./services/nginxproxy
+      args:
         - NGINXPROXY_TAG_VERSION=${NGINXPROXY_TAG_VERSION}
-    # volumes: 
-    #   - nextcloud_all_data:/var/www/html
-    # environment: 
-    #   - MYSQL_HOST=${MYSQL_HOST}
-    #   - MYSQL_DATABASE=${NEXTCLOUD_MYSQL_DATABASE}
-    #   - MYSQL_USER=${MYSQL_USER}
-    #   - MYSQL_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    #   - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
-    #   - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
-    # networks: 
-    #   default:   
-    #     ipv4_address: ${NEXTCLOUD_HOST}
-    #     aliases: 
-    #       - ${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN}
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+    volumes: 
+      - letsencrypt_certs:/etc/nginx/certs:ro
+      - letsencrypt_vhost.d:/etc/nginx/vhost.d
+      - letsencrypt_html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always
+    ports: 
+      - 80:80
+      - 443:443
+    networks: 
+      proxy:
+
+### LETSENCRYPT-COMPANION ##########
+  letsencrypt:
+    container_name: ${COMPOSE_PROJECT_NAME}_${LETSENCRYPT_CONTAINER_NAME}
+    build:
+      context: ./services/letsencrypt
+      args:
+        - LETSENCRYPT_TAG_VERSION=${LETSENCRYPT_TAG_VERSION}
+    volumes: 
+      - letsencrypt_certs:/etc/nginx/certs
+      - letsencrypt_vhost.d:/etc/nginx/vhost.d:rw
+      - letsencrypt_html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment: 
+      - DEBUG=true
+      - NGINX_PROXY_CONTAINER=nginxproxy
+      - ACME_CA_URI=https://acme-staging.api.letsencrypt.org/directory
+    restart: always
+    depends_on: 
+      - nginxproxy
+    networks: 
+      proxy:
