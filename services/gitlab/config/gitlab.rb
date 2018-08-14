@@ -10,7 +10,7 @@ gitlab_rails['ldap_servers'] = {
     'email' => ['mail','mailalias'],
     'first_name' => 'givenName',
     'last_name' => 'sn',
-    'name' => 'cn'
+    'name' => 'uid'
   },
   'encryption' => 'plain',
   'allow_username_or_email_login' => 'false',

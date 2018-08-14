@@ -1,6 +1,19 @@
-172.25.0.80 task.nindeco.com 
-172.25.0.80 git.nindeco.com 
-172.25.0.80 nindeco.com 
-172.25.0.80 ldap.nindeco.com ldapserver.nindeco.com
-172.25.0.80 cloud.nindeco.com
-172.25.0.80 mail.nindeco.com
+### NINDECO ####################
+        127.0.0.1   task.nindeco.com
+        127.0.0.1   git.nindeco.com
+        127.0.0.1   nindeco.com
+        127.0.0.1   bind.nindeco.com
+        127.0.0.1   ldap.nindeco.com ldapserver.nindeco.com
+        127.0.0.1   cloud.nindeco.com
+        127.0.0.1   mail.nindeco.com
+################################
+  
+### DEBUG NINDECO ####################
+        192.168.1.179    task.nindeco.com
+        192.168.1.179    git.nindeco.com
+        192.168.1.179    nindeco.com
+        192.168.1.179    bind.nindeco.com
+        192.168.1.179    ldap.nindeco.com
+        192.168.1.179    cloud.nindeco.com
+        192.168.1.179    mail.nindeco.com
+################################

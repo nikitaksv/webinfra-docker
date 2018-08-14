@@ -272,3 +272,26 @@ uid: redmine
 uidnumber: 1000
 userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
 
+# Entry 20: uid=cloud,ou=services,{{ LDAP_BASE_DN }}
+dn: uid=cloud,ou=services,{{ LDAP_BASE_DN }}
+cn: Service Cloud
+gidnumber: 500
+givenname: Service
+homedirectory: /home/users/cloud
+memberof: cn=services,ou=groups,{{ LDAP_BASE_DN }}
+mail: cloud@nindeco.com
+postfixmailalias: cloud@nindeco.com
+mailenabled: TRUE
+mailgidnumber: 5000
+mailuidnumber: 5000
+objectclass: inetOrgPerson
+objectclass: person
+objectclass: posixAccount
+objectclass: extensibleObject
+objectclass: PostfixBookMailAccount
+objectclass: top
+sn: Cloud
+uid: cloud
+uidnumber: 1000
+userpassword: {MD5}l17LcZaS+ivHJVsMLdLzpA==
+
