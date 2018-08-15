@@ -144,7 +144,7 @@ services:
       args: 
         - REDMINE_TAG_VERSION=${REDMINE_TAG_VERSION}
     volumes: 
-      # - ${REDMINE_DATA_PATH}:/usr/src/redmine/files
+      - ${REDMINE_DATA_PATH}:/usr/src/redmine/files
       - ${REDMINE_PLUGINS_PATH}:/usr/src/redmine/plugins
       - ${REDMINE_CONFIGURATION_FILE_PATH}:/usr/src/redmine/config/configuration.yml
     environment: 
