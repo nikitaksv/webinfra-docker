@@ -1,0 +1,12 @@
+<%= form_tag(update_subtask_columns_path(nil), method: :post) do %>
+  <%= hidden_field_tag 'project_id', @project.id %>
+  <legend> Select default columns for subtask of project </legend>
+  <strong> <%= @project.name %> </strong>
+  <br/>
+
+  <fieldset class="box">
+    <%= render_query_columns_selection(@query) %>
+  </fieldset>
+  <%= submit_tag t(:button_save) -%>
+  <%= submit_tag t(:button_cancel) -%>
+<% end %>

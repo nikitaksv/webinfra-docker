@@ -1,0 +1,7 @@
+<fieldset class="box">
+  <legend>Select default columns for subtask </legend>
+  <%= render_query_columns_selection(
+          IssueQuery.new(:column_names => Setting.plugin_subtask_columns["subtask_default_columns"]), 
+         :name => 'settings[subtask_default_columns]') %>
+</fieldset>
+
