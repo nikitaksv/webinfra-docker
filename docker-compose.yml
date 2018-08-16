@@ -127,14 +127,6 @@ services:
         aliases: 
           - ${BIND_HOSTNAME}.${DOMAIN}
 
-### REDIS ##########################
-  redis:
-    container_name: ${COMPOSE_PROJECT_NAME}_redis
-    image: redis:latest
-    expose:
-      - 6379
-    networks: 
-      default:
 ### REDMINE ########################
   redmine:
     container_name: ${COMPOSE_PROJECT_NAME}_${REDMINE_CONTAINER_NAME}
@@ -146,6 +138,7 @@ services:
     volumes: 
       - ${REDMINE_DATA_PATH}:/usr/src/redmine/files
       - ${REDMINE_PLUGINS_PATH}:/usr/src/redmine/plugins
+      - ${REDMINE_THEMES_PATH}:/usr/src/redmine/public/themes
       - ${REDMINE_CONFIGURATION_FILE_PATH}:/usr/src/redmine/config/configuration.yml
     environment: 
       - REDMINE_DB_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -156,9 +149,17 @@ services:
       - LETSENCRYPT_HOST=${REDMINE_HOSTNAME}.${DOMAIN}
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       # - REDMINE_PLUGINS_MIGRATE=true
+      - RAILS_ENV=production
+    command:
+      - /bin/sh
+      - -ec
+      - |
+         /docker-entrypoint.sh rake db:migrate
+         /docker-entrypoint.sh rake tmp:cache:clear tmp:sessions:clear
+         /docker-entrypoint.sh rake redmine:plugins NAME=redmine_agile
+         /docker-entrypoint.sh rails server -b 0.0.0.0
     depends_on: 
       - mysql
-      - redis
     expose: 
       - 80
     networks: 
