@@ -310,6 +310,8 @@ services:
       - POSTMASTER_ADDRESS=postmaster@${DOMAIN}
       - SSL_TYPE=${SSL_TYPE}
       - PERMIT_DOCKER=${PERMIT_DOCKER}
+      - LETSENCRYPT_HOST=${MAIL_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
     networks: 
       default:
     cap_add:
