@@ -116,7 +116,8 @@ services:
       - LETSENCRYPT_HOST=${BIND_HOSTNAME}.${DOMAIN}
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
     ports: 
-      - 15${BIND_EXPOSE}:${BIND_EXPOSE}
+      - 15${BIND_EXPOSE}:${BIND_EXPOSE}/tcp
+      - 15${BIND_EXPOSE}:${BIND_EXPOSE}/udp
     expose:
       - ${BIND_WEDMIN_EXPOSE}
     restart: always
