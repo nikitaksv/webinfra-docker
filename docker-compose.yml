@@ -112,7 +112,6 @@ services:
     environment: 
       - VIRTUAL_HOST=${BIND_HOSTNAME}.${DOMAIN}
       - VIRTUAL_PORT=${BIND_WEDMIN_EXPOSE}
-      - VIRTUAL_PROTO=https
       - LETSENCRYPT_HOST=${BIND_HOSTNAME}.${DOMAIN}
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
     ports: 
@@ -343,8 +342,8 @@ services:
       context: ./services/nginxproxy
       args:
         - NGINXPROXY_TAG_VERSION=${NGINXPROXY_TAG_VERSION}
-    # labels:
-    #   com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
     volumes: 
       - letsencrypt_certs:/etc/nginx/certs:ro
       - ./ssl:/etc/nginx/certs
@@ -357,8 +356,6 @@ services:
     ports: 
       - 80:80
       - 443:443
-    # depends_on: 
-    #   - omgwtfssl
     networks: 
       default:
 
@@ -376,24 +373,24 @@ services:
   #     - SSL_CERT=/certs/task.nindeco.com.crt
   #   networks:
   #     default:
-# ### LETSENCRYPT-COMPANION ##########
-#   letsencrypt:
-#     container_name: ${COMPOSE_PROJECT_NAME}_${LETSENCRYPT_CONTAINER_NAME}
-#     build:
-#       context: ./services/letsencrypt
-#       args:
-#         - LETSENCRYPT_TAG_VERSION=${LETSENCRYPT_TAG_VERSION}
-#     volumes: 
-#       - letsencrypt_certs:/etc/nginx/certs
-#       - letsencrypt_vhost.d:/etc/nginx/vhost.d:rw
-#       - letsencrypt_html:/usr/share/nginx/html
-#       - /var/run/docker.sock:/var/run/docker.sock:ro
-#     environment: 
-#       - DEBUG=true
-#       - NGINX_PROXY_CONTAINER=nginxproxy
-#       - ACME_CA_URI=https://acme-staging.api.letsencrypt.org/directory
-#     restart: always
-#     depends_on: 
-#       - nginxproxy
-#     networks: 
-#       default:
+### LETSENCRYPT-COMPANION ##########
+  letsencrypt:
+    container_name: ${COMPOSE_PROJECT_NAME}_${LETSENCRYPT_CONTAINER_NAME}
+    build:
+      context: ./services/letsencrypt
+      args:
+        - LETSENCRYPT_TAG_VERSION=${LETSENCRYPT_TAG_VERSION}
+    volumes: 
+      - letsencrypt_certs:/etc/nginx/certs
+      - letsencrypt_vhost.d:/etc/nginx/vhost.d:rw
+      - letsencrypt_html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment: 
+      # - DEBUG=true
+      - NGINX_PROXY_CONTAINER=nginxproxy
+      # - ACME_CA_URI=https://acme-staging.api.letsencrypt.org/directory
+    restart: always
+    depends_on: 
+      - nginxproxy
+    networks: 
+      default:
