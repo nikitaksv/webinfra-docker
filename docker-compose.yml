@@ -345,7 +345,7 @@ services:
       args:
         - NGINXPROXY_TAG_VERSION=${NGINXPROXY_TAG_VERSION}
     labels:
-      ru.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
     volumes: 
       - letsencrypt_certs:/etc/nginx/certs:ro
       - ./ssl:/etc/nginx/certs
