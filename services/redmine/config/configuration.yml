@@ -5,7 +5,7 @@ production:
       address: '172.25.0.8'
       port: 25
       openssl_verify_mode: none
-      domain: 'nindeco.com'
+      domain: 'karioka.ru'
       authentication: :plain
-      user_name: 'task@nindeco.com'
+      user_name: 'task@karioka.ru'
       password: 'defender'

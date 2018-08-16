@@ -2,12 +2,12 @@
 <!DOCTYPE template SYSTEM "../template.dtd">
 <template>
 	<askcontainer>1</askcontainer>
-	<description>New Nindeco Group</description>
+	<description>New karioka Group</description>
 	<icon>ldap-user.png</icon>
 	<invalid>0</invalid>
 	<rdn>cn</rdn>
 	<!--<regexp>^ou=People,o=.*,</regexp>-->
-	<title>Generic: Nindeco Group</title>
+	<title>Generic: karioka Group</title>
 	<visible>1</visible>
 	<objectClasses>
 	<objectClass id="groupOfNames"></objectClass> 

@@ -1,15 +1,15 @@
-# nindeco
+# karioka
 ---
 ### Redmine Ldap configuration:
 
     Name     = Some random description
-    Host     = ldap.nindeco.com
+    Host     = ldap.karioka.ru
     Port     = 389
     LDAPS    = no
-    Account  = cn=redmine,ou=services,dc=nindeco,dc=com
+    Account  = cn=redmine,ou=services,dc=karioka,dc=ru
     Password = defender
-    Base DN  = ou=people,dc=nindeco,dc=com  
-    Filter   = (&(objectClass=posixAccount)(memberof=cn=users,ou=groups,dc=nindeco,dc=com))
+    Base DN  = ou=people,dc=karioka,dc=ru  
+    Filter   = (&(objectClass=posixAccount)(memberof=cn=users,ou=groups,dc=karioka,dc=ru))
 
     On-the-fly user creation = yes
     Attributes:
@@ -20,7 +20,7 @@
 
 ---
 ### Gitlab SMTP documentation: 
-https://docs.gitlab.com/omnibus/settings/smtp.html
+https://docs.gitlab.ru/omnibus/settings/smtp.html
 
 ##### TEST SMTP:  
 In gitlab container execute:
@@ -29,7 +29,7 @@ gitlab-rails console
 ```
 Wait when console is loaded
 ```rb
-Notify.test_email('admin@nindeco.com', 'Message Subject', 'Message Body').deliver_now
+Notify.test_email('admin@karioka.ru', 'Message Subject', 'Message Body').deliver_now
 ```
 
 ---
@@ -37,9 +37,9 @@ Notify.test_email('admin@nindeco.com', 'Message Subject', 'Message Body').delive
 Tab Server:  
 - url: ldap (we use dns docker. ldap <- this dns name container)   
 - port: 389  
-- DN: uid=cloud,ou=services,dc=nindeco,dc=com  
+- DN: uid=cloud,ou=services,dc=karioka,dc=ru  
 - Password: \<service_password\>  
-- Base DN: dc=nindeco,dc=com
+- Base DN: dc=karioka,dc=ru
 - Click Advanced and select Directory Settings
 - Set 'member (AD)' in property Group-Member association
 
@@ -47,11 +47,11 @@ Tab Server:
 
 Tab Users:
 ```ldif
-(&(|(objectclass=person))(|(memberof=cn=users,ou=groups,dc=nindeco,dc=com)))
+(&(|(objectclass=person))(|(memberof=cn=users,ou=groups,dc=karioka,dc=ru)))
 ```
 Tab Credentials:
 ```ldif
-(&(&(|(objectclass=person))(|(memberof=cn=users,ou=groups,dc=nindeco,dc=com)))(|(mail=%uid)(uid=%uid)))
+(&(&(|(objectclass=person))(|(memberof=cn=users,ou=groups,dc=karioka,dc=ru)))(|(mail=%uid)(uid=%uid)))
 ```
 Tab Groups:
 ```ldif

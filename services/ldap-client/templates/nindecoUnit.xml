@@ -2,12 +2,12 @@
 <!DOCTYPE template SYSTEM "../template.dtd">
 <template>
 	<askcontainer>1</askcontainer>
-	<description>New Nindeco Unit</description>
+	<description>New karioka Unit</description>
 	<icon>ldap-user.png</icon>
 	<invalid>0</invalid>
 	<rdn>uid</rdn>
 	<!--<regexp>^ou=People,o=.*,</regexp>-->
-	<title>Generic: Nindeco Unit</title>
+	<title>Generic: karioka Unit</title>
 	<visible>1</visible>
 	<objectClasses>
 	<objectClass id="inetOrgPerson"></objectClass>
@@ -39,7 +39,7 @@
 		<attribute id="uid">
 			<display>Unit ID</display>
 			<onchange>=autoFill(homeDirectory;/home/users/%uid%)</onchange>
-			<onchange>=autoFill(mail;%uid%@nindeco.com)</onchange>
+			<onchange>=autoFill(mail;%uid%@karioka.ru)</onchange>
 			<order>4</order>
 			<page>1</page>
 			<spacer>1</spacer>
@@ -54,10 +54,10 @@
 			<verify>1</verify>
 		</attribute>
 		<attribute id="memberOf">
-			<display>Group member (If you create service then use: dn="cn=services,ou=groups,dc=nindeco,dc=com")</display>
+			<display>Group member (If you create service then use: dn="cn=services,ou=groups,dc=karioka,dc=ru")</display>
 			<order>6</order>
 			<page>1</page>
-			<value>cn=users,ou=groups,dc=nindeco,dc=com</value>
+			<value>cn=users,ou=groups,dc=karioka,dc=ru</value>
 		</attribute>
 		<attribute id="mailEnabled">
 			<display>Email Enabled</display>

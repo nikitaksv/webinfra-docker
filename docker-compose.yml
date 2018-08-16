@@ -112,6 +112,7 @@ services:
     environment: 
       - VIRTUAL_HOST=${BIND_HOSTNAME}.${DOMAIN}
       - VIRTUAL_PORT=${BIND_WEDMIN_EXPOSE}
+      - VIRTUAL_PROTO=https
       - LETSENCRYPT_HOST=${BIND_HOSTNAME}.${DOMAIN}
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
     ports: 
@@ -343,7 +344,7 @@ services:
       args:
         - NGINXPROXY_TAG_VERSION=${NGINXPROXY_TAG_VERSION}
     labels:
-      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+      ru.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
     volumes: 
       - letsencrypt_certs:/etc/nginx/certs:ro
       - ./ssl:/etc/nginx/certs
@@ -366,11 +367,11 @@ services:
   #   volumes:
   #     - letsencrypt_certs:/certs
   #   environment:
-  #     - SSL_SUBJECT=task.nindeco.com
-  #     - CA_SUBJECT=admin@nindeco.com
-  #     - SSL_KEY=/certs/task.nindeco.com.key
-  #     - CA_CERT=/certs/task.nindeco.com-ca.crt
-  #     - SSL_CERT=/certs/task.nindeco.com.crt
+  #     - SSL_SUBJECT=task.karioka.ru
+  #     - CA_SUBJECT=admin@karioka.ru
+  #     - SSL_KEY=/certs/task.karioka.ru.key
+  #     - CA_CERT=/certs/task.karioka.ru-ca.crt
+  #     - SSL_CERT=/certs/task.karioka.ru.crt
   #   networks:
   #     default:
 ### LETSENCRYPT-COMPANION ##########
