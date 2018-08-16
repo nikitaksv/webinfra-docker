@@ -155,6 +155,7 @@ services:
       - /bin/sh
       - -ec
       - |
+         redis-server /etc/redis/redis.conf
          /docker-entrypoint.sh rake db:migrate
          /docker-entrypoint.sh rake tmp:cache:clear tmp:sessions:clear
          /docker-entrypoint.sh rake redmine:plugins NAME=redmine_agile
