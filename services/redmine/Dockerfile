@@ -3,8 +3,7 @@ FROM redmine:${REDMINE_TAG_VERSION}
 
 ### Install dependencies for TDlib; install and start redis-server; 
 RUN apt-get update \
-    && apt-get install -y gperf build-essential zlib1g-dev cmake openssl libssl-dev libreadline-dev clang redis-server \
-    && redis-server /etc/redis/redis.conf
+    && apt-get install -y gperf build-essential zlib1g-dev cmake openssl libssl-dev libreadline-dev clang redis-server
 
 ### clone and build TDLib;
 RUN cd /usr/src/redmine/ \
