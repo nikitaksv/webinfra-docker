@@ -261,6 +261,7 @@ services:
 
 ### MAIL ###########################
   mail:
+    hostname: ${MAIL_HOSTNAME}
     domainname: ${DOMAIN}
     container_name: ${COMPOSE_PROJECT_NAME}_${MAIL_CONTAINER_NAME}
     build:
@@ -309,7 +310,7 @@ services:
       - POSTMASTER_ADDRESS=postmaster@${DOMAIN}
       - SSL_TYPE=${SSL_TYPE}
       - PERMIT_DOCKER=${PERMIT_DOCKER}
-      - LETSENCRYPT_HOST=${DOMAIN}
+      - LETSENCRYPT_HOST=${MAIL_HOSTNAME}.${DOMAIN}
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
     networks: 
       default:
