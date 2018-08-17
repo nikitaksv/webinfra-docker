@@ -1,4 +1,0 @@
-production:
-  redis:
-    url: redis://redis:6379/8
-    namespace: redis

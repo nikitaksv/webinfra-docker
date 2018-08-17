@@ -20,7 +20,7 @@
 
 ---
 ### Gitlab SMTP documentation: 
-https://docs.gitlab.ru/omnibus/settings/smtp.html
+https://docs.gitlab.com/omnibus/settings/smtp.html
 
 ##### TEST SMTP:  
 In gitlab container execute:
