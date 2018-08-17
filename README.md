@@ -1,5 +1,12 @@
 # karioka
 ---
+### Mail setup
+Run command:
+```sh
+./mail_config.sh email add admin@karioka.ru
+./mail_config.sh config dkim 2048
+```
+
 ### Redmine Ldap configuration:
 
     Name     = Some random description
