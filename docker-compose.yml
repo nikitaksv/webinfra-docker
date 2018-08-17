@@ -190,6 +190,25 @@ services:
           - ${MYSQL_HOSTNAME}.${DOMAIN}
     restart: always
 
+### PHPMYADMIN ##########################
+  phpmyadmin:
+    container_name: ${COMPOSE_PROJECT_NAME}_${PHPMYADMIN_CONTAINER_NAME}
+    build:
+      context: ./services/phpmyadmin
+      args: 
+        - PHPMYADMIN_TAG_VERSION=${PHPMYADMIN_TAG_VERSION}
+    environment: 
+      - PMA_HOST=mysql
+      - TZ=${TZ}
+      - VIRTUAL_HOST=${PHPMYADMIN_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_HOST=${PHPMYADMIN_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
+    networks: 
+      default:
+        aliases: 
+          - ${PHPMYADMIN_HOSTNAME}.${DOMAIN}
+    restart: always
+
 ### GITLAB #########################
   gitlab:
     container_name: ${COMPOSE_PROJECT_NAME}_${GITLAB_CONTAINER_NAME}
