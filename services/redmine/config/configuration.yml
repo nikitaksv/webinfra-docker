@@ -2,7 +2,7 @@ production:
   email_delivery:
     delivery_method: :smtp
     smtp_settings:
-      address: '172.25.0.8'
+      address: mail
       port: 25
       openssl_verify_mode: none
       domain: 'nindeco.com'
