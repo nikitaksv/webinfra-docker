@@ -1,5 +1,5 @@
 # LDIF Export for {{ LDAP_BASE_DN }}
-# Server: ldapserver.karioka.ru (ldapserver.karioka.ru)
+# Server: ldapserver.nindeco.com (ldapserver.nindeco.com)
 # Search Scope: sub
 # Search Filter: (objectClass=*)
 # Total Entries: 19
@@ -13,8 +13,8 @@ version: 1
 ###
 # # Entry 1: {{ LDAP_BASE_DN }}
 # dn: {{ LDAP_BASE_DN }}
-# dc: karioka
-# o: karioka
+# dc: nindeco
+# o: nindeco
 # objectclass: top
 # objectclass: dcObject
 # objectclass: organization
@@ -56,7 +56,7 @@ objectclass: top
 dn: cn=admin,cn=users,ou=groups,{{ LDAP_BASE_DN }}
 cn: admin
 member: uid=admin,ou=people,{{ LDAP_BASE_DN }}
-mail: admins@karioka.ru
+mail: admins@nindeco.com
 objectclass: groupOfNames
 objectclass: mailGroup
 objectclass: top
@@ -65,7 +65,7 @@ objectclass: top
 dn: cn=client,cn=users,ou=groups,{{ LDAP_BASE_DN }}
 cn: client
 member: uid=ivanov,ou=people,{{ LDAP_BASE_DN }}
-mail: clients@karioka.ru
+mail: clients@nindeco.com
 objectclass: groupOfNames
 objectclass: mailGroup
 objectclass: top
@@ -74,7 +74,7 @@ objectclass: top
 dn: cn=employee,cn=users,ou=groups,{{ LDAP_BASE_DN }}
 cn: employee
 member: uid=ivanov,ou=people,{{ LDAP_BASE_DN }}
-mail: employees@karioka.ru
+mail: employees@nindeco.com
 objectclass: groupOfNames
 objectclass: mailGroup
 objectclass: top
@@ -83,7 +83,7 @@ objectclass: top
 dn: cn=manager,cn=users,ou=groups,{{ LDAP_BASE_DN }}
 cn: manager
 member: uid=manager,ou=people,{{ LDAP_BASE_DN }}
-mail: managers@karioka.ru
+mail: managers@nindeco.com
 objectclass: groupOfNames
 objectclass: mailGroup
 objectclass: top
@@ -94,7 +94,7 @@ cn: all
 member: uid=admin,ou=people,{{ LDAP_BASE_DN }}
 member: uid=manager,ou=people,{{ LDAP_BASE_DN }}
 member: uid=ivanov,ou=people,{{ LDAP_BASE_DN }}
-mail: all@karioka.ru
+mail: all@nindeco.com
 objectclass: groupOfNames
 objectclass: mailGroup
 objectclass: top
@@ -112,7 +112,7 @@ gidnumber: 501
 givenname: Company
 homedirectory: /home/users/admin
 memberof: cn=users,ou=groups,{{ LDAP_BASE_DN }}
-mail: admin@karioka.ru
+mail: admin@nindeco.com
 mailenabled: TRUE
 mailgidnumber: 5000
 mailuidnumber: 5000
@@ -122,7 +122,7 @@ objectclass: posixAccount
 objectclass: extensibleObject
 objectclass: PostfixBookMailAccount
 objectclass: top
-postfixmailalias: admin@karioka.ru
+postfixmailalias: admin@nindeco.com
 sn: Admin
 uid: admin
 uidnumber: 1004
@@ -135,7 +135,7 @@ gidnumber: 501
 givenname: Ivan
 homedirectory: /home/users/ivanov
 memberof: cn=users,ou=groups,{{ LDAP_BASE_DN }}
-mail: ivanov@karioka.ru
+mail: ivanov@nindeco.com
 mailenabled: TRUE
 mailgidnumber: 5000
 mailuidnumber: 5000
@@ -145,7 +145,7 @@ objectclass: posixAccount
 objectclass: extensibleObject
 objectclass: PostfixBookMailAccount
 objectclass: top
-postfixmailalias: ivanov@karioka.ru
+postfixmailalias: ivanov@nindeco.com
 sn: Ivanov
 uid: ivanov
 uidnumber: 1006
@@ -158,7 +158,7 @@ gidnumber: 501
 givenname: Company
 homedirectory: /home/users/manager
 memberof: cn=users,ou=groups,{{ LDAP_BASE_DN }}
-mail: manager@karioka.ru
+mail: manager@nindeco.com
 mailenabled: TRUE
 mailgidnumber: 5000
 mailuidnumber: 5000
@@ -168,7 +168,7 @@ objectclass: posixAccount
 objectclass: extensibleObject
 objectclass: PostfixBookMailAccount
 objectclass: top
-postfixmailalias: manager@karioka.ru
+postfixmailalias: manager@nindeco.com
 sn: Manager
 uid: manager
 uidnumber: 1005
@@ -187,8 +187,8 @@ gidnumber: 500
 givenname: Service
 homedirectory: /home/users/cloud
 memberof: cn=services,ou=groups,{{ LDAP_BASE_DN }}
-mail: cloud@karioka.ru
-postfixmailalias: cloud@karioka.ru
+mail: cloud@nindeco.com
+postfixmailalias: cloud@nindeco.com
 mailenabled: TRUE
 mailgidnumber: 5000
 mailuidnumber: 5000
@@ -210,8 +210,8 @@ gidnumber: 500
 givenname: Service
 homedirectory: /home/users/git
 memberof: cn=services,ou=groups,{{ LDAP_BASE_DN }}
-mail: git@karioka.ru
-postfixmailalias: git@karioka.ru
+mail: git@nindeco.com
+postfixmailalias: git@nindeco.com
 mailenabled: TRUE
 mailgidnumber: 5000
 mailuidnumber: 5000
@@ -233,8 +233,8 @@ gidnumber: 500
 givenname: Service
 homedirectory: /home/users/mail
 memberof: cn=services,ou=groups,{{ LDAP_BASE_DN }}
-mail: postmaster@karioka.ru
-postfixmailalias: postmaster@karioka.ru
+mail: postmaster@nindeco.com
+postfixmailalias: postmaster@nindeco.com
 mailenabled: TRUE
 mailgidnumber: 5000
 mailuidnumber: 5000
@@ -256,8 +256,8 @@ gidnumber: 500
 givenname: Service
 homedirectory: /home/users/redmine
 memberof: cn=services,ou=groups,{{ LDAP_BASE_DN }}
-mail: task@karioka.ru
-postfixmailalias: task@karioka.ru
+mail: task@nindeco.com
+postfixmailalias: task@nindeco.com
 mailenabled: TRUE
 mailgidnumber: 5000
 mailuidnumber: 5000

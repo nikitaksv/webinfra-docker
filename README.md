@@ -1,22 +1,22 @@
-# karioka
+# nindeco
 ---
 ### Mail setup
 Run command:
 ```sh
-./mail_config.sh email add admin@karioka.ru
+./mail_config.sh email add admin@nindeco.com
 ./mail_config.sh config dkim 2048
 ```
 
 ### Redmine Ldap configuration:
 
     Name     = Some random description
-    Host     = ldap.karioka.ru
+    Host     = ldap.nindeco.com
     Port     = 389
     LDAPS    = no
-    Account  = cn=redmine,ou=services,dc=karioka,dc=ru
+    Account  = cn=redmine,ou=services,dc=nindeco,dc=com
     Password = defender
-    Base DN  = ou=people,dc=karioka,dc=ru  
-    Filter   = (&(objectClass=posixAccount)(memberof=cn=users,ou=groups,dc=karioka,dc=ru))
+    Base DN  = ou=people,dc=nindeco,dc=com  
+    Filter   = (&(objectClass=posixAccount)(memberof=cn=users,ou=groups,dc=nindeco,dc=com))
 
     On-the-fly user creation = yes
     Attributes:
@@ -36,7 +36,7 @@ gitlab-rails console
 ```
 Wait when console is loaded
 ```rb
-Notify.test_email('admin@karioka.ru', 'Message Subject', 'Message Body').deliver_now
+Notify.test_email('admin@nindeco.com', 'Message Subject', 'Message Body').deliver_now
 ```
 
 ---
@@ -44,9 +44,9 @@ Notify.test_email('admin@karioka.ru', 'Message Subject', 'Message Body').deliver
 Tab Server:  
 - url: ldap (we use dns docker. ldap <- this dns name container)   
 - port: 389  
-- DN: uid=cloud,ou=services,dc=karioka,dc=ru  
+- DN: uid=cloud,ou=services,dc=nindeco,dc=com  
 - Password: \<service_password\>  
-- Base DN: dc=karioka,dc=ru
+- Base DN: dc=nindeco,dc=com
 - Click Advanced and select Directory Settings
 - Set 'member (AD)' in property Group-Member association
 
@@ -54,11 +54,11 @@ Tab Server:
 
 Tab Users:
 ```ldif
-(&(|(objectclass=person))(|(memberof=cn=users,ou=groups,dc=karioka,dc=ru)))
+(&(|(objectclass=person))(|(memberof=cn=users,ou=groups,dc=nindeco,dc=com)))
 ```
 Tab Credentials:
 ```ldif
-(&(&(|(objectclass=person))(|(memberof=cn=users,ou=groups,dc=karioka,dc=ru)))(|(mail=%uid)(uid=%uid)))
+(&(&(|(objectclass=person))(|(memberof=cn=users,ou=groups,dc=nindeco,dc=com)))(|(mail=%uid)(uid=%uid)))
 ```
 Tab Groups:
 ```ldif

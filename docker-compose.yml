@@ -390,11 +390,11 @@ services:
   #   volumes:
   #     - letsencrypt_certs:/certs
   #   environment:
-  #     - SSL_SUBJECT=task.karioka.ru
-  #     - CA_SUBJECT=admin@karioka.ru
-  #     - SSL_KEY=/certs/task.karioka.ru.key
-  #     - CA_CERT=/certs/task.karioka.ru-ca.crt
-  #     - SSL_CERT=/certs/task.karioka.ru.crt
+  #     - SSL_SUBJECT=task.nindeco.com
+  #     - CA_SUBJECT=admin@nindeco.com
+  #     - SSL_KEY=/certs/task.nindeco.com.key
+  #     - CA_CERT=/certs/task.nindeco.com-ca.crt
+  #     - SSL_CERT=/certs/task.nindeco.com.crt
   #   networks:
   #     default:
 ### LETSENCRYPT-COMPANION ##########

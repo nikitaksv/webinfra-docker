@@ -1,19 +1,19 @@
-### karioka ####################
-        127.0.0.1   task.karioka.ru
-        127.0.0.1   git.karioka.ru
-        127.0.0.1   karioka.ru
-        127.0.0.1   bind.karioka.ru
-        127.0.0.1   ldap.karioka.ru ldapserver.karioka.ru
-        127.0.0.1   cloud.karioka.ru
-        127.0.0.1   mail.karioka.ru
+### nindeco ####################
+        127.0.0.1   task.nindeco.com
+        127.0.0.1   git.nindeco.com
+        127.0.0.1   nindeco.com
+        127.0.0.1   bind.nindeco.com
+        127.0.0.1   ldap.nindeco.com ldapserver.nindeco.com
+        127.0.0.1   cloud.nindeco.com
+        127.0.0.1   mail.nindeco.com
 ################################
   
-### DEBUG karioka ####################
-        192.168.1.179    task.karioka.ru
-        192.168.1.179    git.karioka.ru
-        192.168.1.179    karioka.ru
-        192.168.1.179    bind.karioka.ru
-        192.168.1.179    ldap.karioka.ru
-        192.168.1.179    cloud.karioka.ru
-        192.168.1.179    mail.karioka.ru
+### DEBUG nindeco ####################
+        192.168.1.179    task.nindeco.com
+        192.168.1.179    git.nindeco.com
+        192.168.1.179    nindeco.com
+        192.168.1.179    bind.nindeco.com
+        192.168.1.179    ldap.nindeco.com
+        192.168.1.179    cloud.nindeco.com
+        192.168.1.179    mail.nindeco.com
 ################################
