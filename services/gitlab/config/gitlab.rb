@@ -13,7 +13,7 @@ gitlab_rails['ldap_servers'] = {
     'name' => 'uid'
   },
   'encryption' => 'plain',
-  'allow_username_or_email_login' => 'false',
+  'allow_username_or_email_login' => true,
   'verify_certificates' => true,
   'bind_dn' => 'uid=git,ou=services,dc=nindeco,dc=com',
   'password' => 'defender',
