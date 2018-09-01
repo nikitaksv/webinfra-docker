@@ -10,7 +10,7 @@ Run command:
 ### Redmine Ldap configuration:
 
     Name     = Some random description
-    Host     = ldap.nindeco.com
+    Host     = ldap
     Port     = 389
     LDAPS    = no
     Account  = cn=redmine,ou=services,dc=nindeco,dc=com
