@@ -54,7 +54,7 @@ Tab Server:
 
 Tab Users:
 ```ldif
-(&(objectclass=person)(memberof=cn=users,ou=groups,dc=nindeco,dc=com)))
+(&(objectclass=person)(memberof=cn=users,ou=groups,dc=nindeco,dc=com))
 ```
 Tab Credentials:
 ```ldif
