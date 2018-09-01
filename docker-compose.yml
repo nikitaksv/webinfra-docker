@@ -13,7 +13,6 @@ volumes:
   bind_data:
   gitlab_data:
   gitlab_config:
-  mail_data:
   mail_state:
   cloud_data:
   letsencrypt_certs:
@@ -235,6 +234,7 @@ services:
         registry_nginx['listen_port'] = 80
         registry_nginx['listen_https'] = false
         gitlab_rails['gitlab_shell_ssh_port'] = ${GITLAB_SSH_PORT};
+        gitlab_rails['time_zone'] = "${TZ}"
       VIRTUAL_HOST: ${GITLAB_HOSTNAME}.${DOMAIN}
       LETSENCRYPT_HOST: ${GITLAB_HOSTNAME}.${DOMAIN}
       LETSENCRYPT_EMAIL: admin@${DOMAIN}
@@ -243,6 +243,7 @@ services:
       - gitlab_config:/etc/gitlab
       - ${GITLAB_LDAP_CONFIG_PATH}:/etc/gitlab/gitlab.rb
       - ${GITLAB_LOGS_PATH}:/var/log/gitlab
+      - ${GITLAB_REPO_PATH}:/var/opt/gitlab/git-data/repositories
     ports:
       - ${GITLAB_SSH_PORT}:22
     networks: 
@@ -294,7 +295,7 @@ services:
       - "465:465"
       - "993:993"
     volumes:
-      - mail_data:/var/mail
+      - ${MAIL_DATA_PATH}:/var/mail
       - mail_state:/var/mail-state
       - ./services/mail/config/:/tmp/docker-mailserver/
       - letsencrypt_certs:/etc/letsencrypt
