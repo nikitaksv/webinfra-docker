@@ -373,6 +373,7 @@ services:
       - letsencrypt_vhost.d:/etc/nginx/vhost.d
       - letsencrypt_html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ${NGINXPROXY_CUSTOM_CONF_PATH}:/etc/nginx/conf.d/my_custom_proxy_settings.conf
     environment: 
       - TZ=${TZ}
     restart: always
