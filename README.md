@@ -1,5 +1,24 @@
 # nindeco
 ---
+### Bind setup
+In container run command
+```sh
+apt-get update && apt-get -y install mc
+mcedit /etc/webmin/config
+```
+and paste  
+```
+referers=bind.nindeco.com  
+```
+and change  
+```
+referers_none=1  
+```
+on  
+ ```
+ referers_none=0  
+ ```
+
 ### Mail setup
 Run command:
 ```sh
