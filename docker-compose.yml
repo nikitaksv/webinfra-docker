@@ -112,6 +112,7 @@ services:
       - VIRTUAL_PROTO=https
       - LETSENCRYPT_HOST=${BIND_HOSTNAME}.${DOMAIN}
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
+      - ROOT_PASSWORD=${ROOT_PASSWORD}
     ports: 
       - 15${BIND_EXPOSE}:${BIND_EXPOSE}/tcp
       - 15${BIND_EXPOSE}:${BIND_EXPOSE}/udp
