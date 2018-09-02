@@ -106,6 +106,7 @@ services:
       context: ./services/bind
       args: 
         - BIND_TAG_VERSION=${BIND_TAG_VERSION}
+        - ADDRESS=${BIND_HOSTNAME}.${DOMAIN}
     environment: 
       - VIRTUAL_HOST=${BIND_HOSTNAME}.${DOMAIN}
       - VIRTUAL_PORT=${BIND_WEDMIN_EXPOSE}
