@@ -33,8 +33,8 @@ services:
       - ${NGINX_CONFIG_PATH}:/etc/nginx/conf.d/
       - cloud_data:/var/www/html:ro
     environment: 
-      - VIRTUAL_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN},${BIND_HOSTNAME}.${DOMAIN}
-      - LETSENCRYPT_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN},${BIND_HOSTNAME}.${DOMAIN}
+      - VIRTUAL_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN}
+      - LETSENCRYPT_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN}
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - TZ=${TZ}
     networks: 
@@ -108,12 +108,17 @@ services:
         - BIND_TAG_VERSION=${BIND_TAG_VERSION}
         - ADDRESS=${BIND_HOSTNAME}.${DOMAIN}
     environment: 
+      - VIRTUAL_HOST=${BIND_HOSTNAME}.${DOMAIN}
+      - VIRTUAL_PORT=${BIND_WEDMIN_EXPOSE}
+      - VIRTUAL_PROTO=https
+      - LETSENCRYPT_HOST=${BIND_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - ROOT_PASSWORD=${ROOT_PASSWORD}
     ports: 
       - 15${BIND_EXPOSE}:${BIND_EXPOSE}/tcp
       - 15${BIND_EXPOSE}:${BIND_EXPOSE}/udp
     expose:
-      - ${BIND_WEBMIN_EXPOSE}
+      - ${BIND_WEDMIN_EXPOSE}
     restart: always
     volumes:
       - bind_data:/data 
