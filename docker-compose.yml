@@ -109,7 +109,7 @@ services:
         - ADDRESS=${BIND_HOSTNAME}.${DOMAIN}
     environment: 
       - VIRTUAL_HOST=${BIND_HOSTNAME}.${DOMAIN}
-      - VIRTUAL_PORT=${BIND_WEDMIN_EXPOSE}
+      - VIRTUAL_PORT=${BIND_WEBMIN_EXPOSE}
       - VIRTUAL_PROTO=https
       - LETSENCRYPT_HOST=${BIND_HOSTNAME}.${DOMAIN}
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
@@ -118,7 +118,7 @@ services:
       - 15${BIND_EXPOSE}:${BIND_EXPOSE}/tcp
       - 15${BIND_EXPOSE}:${BIND_EXPOSE}/udp
     expose:
-      - ${BIND_WEDMIN_EXPOSE}
+      - ${BIND_WEBMIN_EXPOSE}
     restart: always
     volumes:
       - bind_data:/data 
