@@ -110,7 +110,6 @@ services:
     environment: 
       - VIRTUAL_HOST=${BIND_HOSTNAME}.${DOMAIN}
       - VIRTUAL_PORT=${BIND_WEBMIN_EXPOSE}
-      - VIRTUAL_PROTO=https
       - LETSENCRYPT_HOST=${BIND_HOSTNAME}.${DOMAIN}
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - ROOT_PASSWORD=${ROOT_PASSWORD}
@@ -300,6 +299,7 @@ services:
       - ./services/mail/config/:/tmp/docker-mailserver/
       - letsencrypt_certs:/etc/letsencrypt/live
     environment:
+      - OVERRIDE_HOSTNAME=${DOMAIN}
       - ENABLE_SPAMASSASSIN=${ENABLE_SPAMASSASSIN}
       - ENABLE_CLAMAV=${ENABLE_CLAMAV}
       - ENABLE_FAIL2BAN=${ENABLE_FAIL2BAN}
@@ -322,6 +322,7 @@ services:
       - DOVECOT_PASS_ATTRS=${DOVECOT_PASS_ATTRS}
       - DOVECOT_USER_FILTER=${DOVECOT_USER_FILTER}
       - DOVECOT_USER_ATTRS=${DOVECOT_USER_ATTRS}
+      - SASLAUTHD_PASSWD=${SASLAUTHD_PASSWD}
       - SASLAUTHD_MECHANISMS=${SASLAUTHD_MECHANISMS}
       - SASLAUTHD_LDAP_SERVER=${LDAP_HOSTNAME}.${DOMAIN}
       - SASLAUTHD_LDAP_SEARCH_BASE=${SASLAUTHD_LDAP_SEARCH_BASE}
@@ -376,6 +377,7 @@ services:
       - ${NGINXPROXY_CUSTOM_CONF_PATH}:/etc/nginx/conf.d/my_custom_proxy_settings.conf
     environment: 
       - TZ=${TZ}
+      - DEFAULT_HOST=${DOMAIN}
     restart: always
     ports: 
       - 80:80
