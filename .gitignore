@@ -1,5 +1,7 @@
 logs
 ssl
+services/gitlab/repositories
 services/redmine/data
 services/mail/config/postfix-accounts.cf
+services/mail/data
 .env
