@@ -298,7 +298,7 @@ services:
       - ${MAIL_DATA_PATH}:/var/mail
       - mail_state:/var/mail-state
       - ./services/mail/config/:/tmp/docker-mailserver/
-      - letsencrypt_certs:/etc/letsencrypt
+      - letsencrypt_certs:/etc/letsencrypt/live
     environment:
       - ENABLE_SPAMASSASSIN=${ENABLE_SPAMASSASSIN}
       - ENABLE_CLAMAV=${ENABLE_CLAMAV}
