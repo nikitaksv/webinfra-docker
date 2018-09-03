@@ -299,7 +299,6 @@ services:
       - ./services/mail/config/:/tmp/docker-mailserver/
       - letsencrypt_certs:/etc/letsencrypt/live
     environment:
-      - OVERRIDE_HOSTNAME=${DOMAIN}
       - ENABLE_SPAMASSASSIN=${ENABLE_SPAMASSASSIN}
       - ENABLE_CLAMAV=${ENABLE_CLAMAV}
       - ENABLE_FAIL2BAN=${ENABLE_FAIL2BAN}
