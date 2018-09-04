@@ -298,6 +298,7 @@ services:
       - mail_state:/var/mail-state
       - ./services/mail/config/:/tmp/docker-mailserver/
       - letsencrypt_certs:/etc/letsencrypt/live
+      - /etc/localtime:/etc/localtime:ro
     environment:
       - ENABLE_SPAMASSASSIN=${ENABLE_SPAMASSASSIN}
       - ENABLE_CLAMAV=${ENABLE_CLAMAV}
