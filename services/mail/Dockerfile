@@ -4,5 +4,5 @@ FROM tvial/docker-mailserver:${MAIL_TAG_VERSION}
 RUN apt-get update \
     && apt-get install -y mc 
 
-## SpamAssassin auto-learn every monday
+## SpamAssassin auto-learn every sunday
 RUN echo "0 0 * * 0 sa-learn --spam /var/mail/domain.com/*/.Junk --dbpath /var/mail-state/lib-amavis/.spamassassin > /var/log/sa-learn.log 2> /var/log/sa-learn.error.log\n" >> /var/spool/cron/crontabs/root
