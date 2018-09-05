@@ -263,8 +263,8 @@ services:
     volumes: 
       - ${ROUNDCUBEMAIL_CONFIG_PATH}:/var/roundcube/config/
     environment: 
-      - ROUNDCUBEMAIL_DEFAULT_HOST=mail
-      - ROUNDCUBEMAIL_SMTP_SERVER=mail
+      - ROUNDCUBEMAIL_DEFAULT_HOST=${MAIL_HOSTNAME}.${DOMAIN}
+      - ROUNDCUBEMAIL_SMTP_SERVER=${MAIL_HOSTNAME}.${DOMAIN}
       - ROUNDCUBEMAIL_SMTP_PORT=25
       - ROUNDCUBEMAIL_DB_TYPE=mysql
       - ROUNDCUBEMAIL_DB_HOST=${MYSQL_HOSTNAME}.${DOMAIN}
@@ -336,6 +336,8 @@ services:
       - PERMIT_DOCKER=${PERMIT_DOCKER}
     networks: 
       default:
+        aliases: 
+          - ${MAIL_HOSTNAME}.${DOMAIN}
     cap_add:
       - NET_ADMIN
       - SYS_PTRACE
