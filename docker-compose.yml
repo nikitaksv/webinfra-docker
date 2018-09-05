@@ -169,6 +169,7 @@ services:
 
 ### MYSQL ##########################
   mysql:
+    command: []
     container_name: ${COMPOSE_PROJECT_NAME}_${MYSQL_CONTAINER_NAME}
     build:
       context: ./services/mysql
@@ -181,6 +182,7 @@ services:
       - TZ=${TZ}
     volumes: 
       - mysql_data:/var/lib/mysql
+      - ${MYSQL_CONF_PATH}:/etc/mysql/conf.d
     networks: 
       default:
         aliases: 
