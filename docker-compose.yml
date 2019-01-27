@@ -18,6 +18,7 @@ volumes:
   letsencrypt_certs:
   letsencrypt_vhost.d:
   letsencrypt_html:
+  portainer_data:
 
 ### SERVICES ########################
 services:
@@ -420,4 +421,23 @@ services:
     restart: always
     depends_on:
       - nginxproxy
+    network_mode: "host"
+  ### PORTAINER ##########
+  portainer:
+    container_name: ${COMPOSE_PROJECT_NAME}_${PORTAINER_CONTAINER_NAME}
+    build:
+      context: ./services/portainer
+      args:
+        - PORTAINER_TAG_VERSION=${PORTAINER_TAG_VERSION}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    environment:
+      - VIRTUAL_HOST=${PORTAINER_HOSTNAME}.${DOMAIN}
+      - VIRTUAL_PORT=${PORTAINER_EXPOSE}
+      - LETSENCRYPT_HOST=${PORTAINER_HOSTNAME}.${DOMAIN}
+      - LETSENCRYPT_EMAIL=admin@${DOMAIN}
+    restart: always
+    expose:
+      - "${PORTAINER_EXPOSE}"
     network_mode: "host"
