@@ -113,8 +113,8 @@ services:
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - ROOT_PASSWORD=${ROOT_PASSWORD}
     ports:
-      - "15${BIND_EXPOSE}:${BIND_EXPOSE}/tcp"
-      - "15${BIND_EXPOSE}:${BIND_EXPOSE}/udp"
+      - "${BIND_INTERFACE_IP}:${BIND_EXPOSE}:${BIND_EXPOSE}/tcp"
+      - "${BIND_INTERFACE_IP}:${BIND_EXPOSE}:${BIND_EXPOSE}/udp"
     expose:
       - "${BIND_WEBMIN_EXPOSE}"
     restart: always
@@ -310,6 +310,9 @@ services:
       - SPOOF_PROTECTION=${SPOOF_PROTECTION}
       - ONE_DIR=${ONE_DIR}
       - DMS_DEBUG=${DMS_DEBUG}
+      - SA_TAG=${SA_TAG}
+      - SA_TAG2=${SA_TAG2}
+      - SA_KILL=${SA_KILL}
       - SA_SPAM_SUBJECT=${SA_SPAM_SUBJECT}
       - LDAP_SERVER_HOST=${LDAP_HOSTNAME}.${DOMAIN}
       - LDAP_SEARCH_BASE=${LDAP_SEARCH_BASE}
