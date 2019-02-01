@@ -19,7 +19,8 @@ volumes:
   letsencrypt_vhost.d:
   letsencrypt_html:
   portainer_data:
-
+  registry_data:
+  
 ### SERVICES ########################
 services:
   ### NGINX ###########################
@@ -32,9 +33,9 @@ services:
     volumes:
       - ${NGINX_CONFIG_PATH}:/etc/nginx/conf.d/
       - cloud_data:/var/www/html:ro
-    environment:
-      - VIRTUAL_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN}
-      - LETSENCRYPT_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN}
+    environment: 
+      - VIRTUAL_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN},${REGISTRY_CONTAINER_NAME}.${DOMAIN}
+      - LETSENCRYPT_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN},${REGISTRY_CONTAINER_NAME}.${DOMAIN}
       - LETSENCRYPT_EMAIL=admin@${DOMAIN}
       - TZ=${TZ}
     networks:
@@ -442,3 +443,12 @@ services:
       - "${PORTAINER_EXPOSE}"
     networks:
       default:
+
+### REGISTRY #######################
+  registry:
+    container_name: ${COMPOSE_PROJECT_NAME}_${REGISTRY_CONTAINER_NAME}
+    image: registry:2
+    ports:
+      - 127.0.0.1:5000:5000
+    volumes:
+      - registry_data:/var/lib/registry

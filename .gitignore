@@ -6,3 +6,4 @@ services/redmine/plugins/redmine_git_remote/repos
 services/mail/config/postfix-accounts.cf
 services/mail/data
 .env
+.history
