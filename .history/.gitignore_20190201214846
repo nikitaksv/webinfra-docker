@@ -1,0 +1,9 @@
+logs
+ssl
+services/gitlab/repositories
+services/redmine/data
+services/redmine/plugins/redmine_git_remote/repos
+services/mail/config/postfix-accounts.cf
+services/mail/data
+.env
+.history
