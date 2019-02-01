@@ -33,6 +33,7 @@ services:
     volumes:
       - ${NGINX_CONFIG_PATH}:/etc/nginx/conf.d/
       - cloud_data:/var/www/html:ro
+      - letsencrypt_certs:/etc/letsencrypt:ro
     environment: 
       - VIRTUAL_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN},${REGISTRY_CONTAINER_NAME}.${DOMAIN}
       - LETSENCRYPT_HOST=${NEXTCLOUD_CONTAINER_NAME}.${DOMAIN},${REGISTRY_CONTAINER_NAME}.${DOMAIN}
@@ -233,8 +234,10 @@ services:
         gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
         nginx['listen_port'] = 80
         nginx['listen_https'] = false
-        registry_nginx['listen_port'] = 80
-        registry_nginx['listen_https'] = false
+        registry_nginx['listen_port'] = 443
+        registry_nginx['listen_https'] = true
+        registry_nginx['ssl_certificate'] = "/etc/gitlab/ssl/letsencrypt/_data/${REGISTRY_CONTAINER_NAME}.${DOMAIN}/cert.pem"
+        registry_nginx['ssl_certificate_key'] = "/etc/gitlab/ssl/letsencrypt/_data/${REGISTRY_CONTAINER_NAME}.${DOMAIN}/key.pem"
         gitlab_rails['gitlab_shell_ssh_port'] = ${GITLAB_SSH_PORT};
         gitlab_rails['time_zone'] = "${TZ}"
       VIRTUAL_HOST: ${GITLAB_HOSTNAME}.${DOMAIN}
@@ -246,6 +249,7 @@ services:
       - ${GITLAB_LDAP_CONFIG_PATH}:/etc/gitlab/gitlab.rb
       - ${GITLAB_LOGS_PATH}:/var/log/gitlab
       - ${GITLAB_REPO_PATH}:/var/opt/gitlab/git-data/repositories
+      - letsencrypt_certs:/etc/gitlab/ssl/letsencrypt:ro
     ports:
       - "${GITLAB_SSH_PORT}:22"
     networks:
